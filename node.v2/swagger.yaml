@@ -1,0 +1,537 @@
+openapi: "3.0.0"
+
+info:
+  version: 2.0.0
+  title: Waves API
+  description: Waves Node API
+  license:
+    name: Apache 2.0
+    url: https://github.com/wavesplatform/Waves/blob/master/LICENSE
+
+servers:
+  - url: https://nodes.wavesplatform.com/api/v2
+    description: Mainnet
+  - url: https://{hostname}:6869/api/v2
+    description: Testnet
+    variables:
+      hostname:
+        enum:
+          - "52.30.47.67"
+          - "52.28.66.217"
+          - "52.77.111.219"
+          - "52.51.92.182"
+        default: "52.30.47.67"
+
+paths:
+
+  /about:
+    get:
+      summary: Returns the versions and other info about Node, Matcher and other services
+      tags:
+        - about
+      responses:
+        200:
+          description: Node, Matcher and other services versions and other info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  node:
+                    type: object
+                    properties:
+                      version:
+                        type: string
+                        example: 0.7.3
+                  matcher:
+                    type: object
+                    properties:
+                      version:
+                        type: string
+                        example: 0.7.3
+
+  /blocks:
+    get:
+      summary: Returns the list of last `limit` blocks with `offset` blocks skipped
+      tags:
+        - blocks
+      parameters:
+        - $ref: '#/components/parameters/query_Limit'
+        - $ref: '#/components/parameters/query_Offset'
+      responses:
+        200:
+          description: List of blocks and the size of that list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  size:
+                    $ref: '#/components/schemas/Size'
+                  list:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Block'
+        400:
+          $ref: '#/components/responses/error_OffsetOutOfRange'
+
+  /blocks/at/{blockHeight}:
+    get:
+      summary: Returns the block at a given height
+      tags:
+        - blocks
+      parameters:
+        - $ref: '#/components/parameters/path_BlockHeight'
+      responses:
+        200:
+          description: Block object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Block'
+        400:
+          $ref: '#/components/responses/error_InvalidBlockHeight'
+
+  /blocks/height:
+    get:
+      summary: Returns current blockchain height
+      tags:
+        - blocks
+      responses:
+        200:
+          description: Object with blockchain height
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  height:
+                    $ref: '#/components/schemas/BlockHeight'
+
+  /blocks/signature/{blockSignature}:
+    get:
+      summary: Returns a block by a given signature
+      tags:
+        - blocks
+      parameters:
+        - $ref: '#/components/parameters/path_BlockSignature'
+      responses:
+        200:
+          description: Block object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Block'
+        400:
+          $ref: '#/components/responses/error_InvalidBlockSignature'
+
+  /blocks/signature/{blockSignature}/height:
+    get:
+      summary: Returns height of a given block
+      tags:
+        - blocks
+      parameters:
+        - $ref: '#/components/parameters/path_BlockSignature'
+      responses:
+        200:
+          description: Object with blockchain height
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  height:
+                    $ref: '#/components/schemas/BlockHeight'
+        400:
+          $ref: '#/components/responses/error_InvalidBlockSignature'
+
+  /address/{address}/aliases:
+    get:
+      summary: Returns the list of address aliases
+      tags:
+        - address
+
+  /address/{address}/balances: # TODO : ?fields=asset__id,balance__regular:
+    get:
+      summary: Returns the list of balances for an address
+      tags:
+        - address
+      parameters:
+        - $ref: '#/components/parameters/path_Address'
+        - $ref: '#/components/parameters/query_Limit'
+        - $ref: '#/components/parameters/query_Offset'
+      responses:
+        200:
+          description: List of assets with balances and the size of that list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  size:
+                    $ref: '#/components/schemas/Size'
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        asset:
+                          $ref: '#/components/schemas/Asset'
+                        balance:
+                          $ref: '#/components/schemas/Balance'
+        400:
+          $ref: '#/components/responses/error_OffsetOutOfRange'
+
+  /address/{address}/balances/{assetId}:
+    get:
+      summary: Returns detailed balance of a given asset for an address
+      tags:
+        - address
+      parameters:
+        - $ref: '#/components/parameters/path_Address'
+        - $ref: '#/components/parameters/path_AssetId'
+      responses:
+        200:
+          description: Detailed balance of an asset
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Balance'
+        400#1: # TODO
+          $ref: '#/components/responses/error_InvalidAddress'
+        400#2: # TODO
+          $ref: '#/components/responses/error_InvalidAssetId'
+
+  /alias/{alias}/address:
+    get:
+      summary: Returns the address which is related to a given alias
+
+  /assets:
+    get:
+      summary: Returns the list of assets
+      tags:
+        - assets
+
+  /assets/{assetId}:
+    get:
+      summary: Returns detailed info on a given asset
+      tags:
+        - assets
+
+  /assets/{assetId}/distribution:
+    get:
+      summary: Returns asset balance distribution by accounts
+      tags:
+        - assets
+
+  /transaction/alias:
+    post:
+      summary: Create an alias for an address
+      tags:
+        - transaction
+
+  # /transaction/asset/issue:
+  # /transaction/asset/reissue:
+  # /transaction/asset/burn:
+
+  # /transaction/leasing/start:
+  # /transaction/leasing/cancel:
+
+  /transaction/transfer:
+    post:
+      summary: Send an amount of an asset to an address
+      tags:
+        - transaction
+
+  /transactions:
+    get:
+      summary: Returns the list of transactions
+      tags:
+        - transactions
+
+  /transactions/{transactionId}:
+    get:
+      summary: Returns the details of a given transaction
+      tags:
+        - transactions
+
+  /utx/size:
+    get:
+      summary: Returns current size of the unconfirmed transactions pool
+      tags:
+        - utx
+      responses:
+        200:
+          description: Object with UTX size
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  size:
+                    $ref: '#/components/schemas/UtxSize'
+
+  /utx/{transactionId}:
+    get:
+      summary: Returns transaction details if it's still in unconfirmed transactions pool
+      tags:
+        - utx
+
+components:
+
+  schemas:
+
+    # Objects
+
+    Asset:
+      description: Asset main info object
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/AssetId'
+        name:
+          type: string
+          example: Waves
+        precision:
+          type: integer
+          example: 8
+        issuer:
+          $ref: '#/components/schemas/Address'
+        quantity:
+          type: integer
+          example: 100000000
+        reissuable:
+          type: boolean
+          example: false
+
+    AssetDetails:
+      description: Asset full info object
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/AssetId'
+        name:
+          type: string
+          example: Waves
+        precision:
+          type: integer
+          example: 8
+        issuer:
+          $ref: '#/components/schemas/Address'
+        quantity:
+          type: integer
+          example: 100000000
+        reissuable:
+          type: boolean
+          example: false
+        # TODO
+
+    Balance:
+      description: Detailed balance object
+      type: object
+      properties:
+        regular:
+          type: integer
+          example: 0
+        generating:
+          type: integer
+          example: 0
+        leased:
+          type: integer
+          example: 0
+        available:
+          type: integer
+          example: 0
+        effective:
+          type: integer
+          example: 0
+
+    Block:
+      description: Block supposed to contain transactions
+      type: object
+      properties:
+        version:
+          type: integer
+          example: 2
+        timestamp:
+          type: integer
+          example: 1501505945003
+        reference:
+          type: string
+          example: u31L28eqyi4FZNv877az1s2SawXf2adbG47dpMrektEB2ke4BqprpGDz3py6rbb9n2sUR6SeTSx6MSeusc9yHCp
+        nxt-consensus:
+          type: object
+          properties:
+            baseTarget:
+              type: integer
+              example: 254
+            generationSignature:
+              type: string
+              example: D48jL46a7iyvooDQj25XkYJSm1d7kkAbNYWzzeWffAB7
+        transactions:
+          type: array
+        generator:
+          type: string
+          example: 3NBVqYXrapgJP9atQccdBPAgJPwHDKkh6A8
+        signature:
+          type: string
+          example: 62tPPQS5tEkDScFf6FyXXE71VwFsppp79wF1hwo11saE4Q6MHUF2TN4Yg5zVprNAH4MSwHy5Zm5s5ZGEbTF9n6gz
+        fee:
+          type: number
+          example: 2.007
+        blocksize:
+          type: integer
+          example: 218
+        height:
+          type: integer
+          example: 178515
+
+    # Primitives
+
+    Address:
+      description: _Address_ | Base58-encoded wallet address
+      type: string
+      example: 3PMgh8ra7v9USWUJxUCxKQKr6PM3MgqNVR8
+
+    AssetId:
+      description: _AssetId_ | Base58-encoded asset unique ID
+      type: string
+      example: WAVES
+
+    BlockHeight:
+      description: _BlockHeight_ | Index of a block in blockchain
+      type: integer
+      minimum: 0
+      example: 666
+
+    BlockSignature:
+      description: _BlockSignature_ | Base58-encoded block signature
+      type: string
+      example: 3b2QWFpkTAP94ydewvRc6CyxRtcc7q6DpvYVFFfGERyy5sjD3pAVHdPCCDXi7XKDZePxHD35nJJroaQWUy6EZcmz
+
+    Size:
+      description: _Size_ | Number of items in the correlating `list` property
+      type: integer
+      example: 1
+
+    UtxSize:
+      description: _UtxSize_ | Number of transactions in the unconfirmed transactions pool
+      type: integer
+      minimum: 0
+      maximum: 10000
+      example: 327
+
+  parameters:
+
+    # Path-related
+
+    path_Address:
+      in: path
+      name: address
+      required: true
+      schema:
+        $ref: '#/components/schemas/Address'
+
+    path_AssetId:
+      in: path
+      name: assetId
+      required: true
+      schema:
+        $ref: '#/components/schemas/AssetId'
+
+    path_BlockHeight:
+      in: path
+      name: blockHeight
+      required: true
+      description: Height of a wanted block
+      schema:
+        $ref: '#/components/schemas/BlockHeight'
+
+    path_BlockSignature:
+      in: path
+      name: blockSignature
+      required: true
+      description: ID of a wanted block
+      schema:
+        $ref: '#/components/schemas/BlockSignature'
+
+    # Query-related
+
+    query_Limit:
+      in: query
+      name: limit
+      required: false
+      description: The number of items in list to return
+      schema:
+        type: integer
+        minimum: 10
+        maximum: 100
+        default: 50
+
+    query_Offset:
+      in: query
+      name: offset
+      required: false
+      description: The number of items in list to skip
+      schema:
+        type: integer
+        default: 0
+
+  responses:
+
+    # Errors
+
+    error_InvalidAddress:
+      description: Provided address in invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: invalid.address
+
+    error_InvalidAssetId:
+      description: Provided asset ID is invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: invalid.asset.id
+
+    error_InvalidBlockHeight:
+      description: Provided height is invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: invalid.block.height
+
+    error_InvalidBlockSignature:
+      description: Provided block signature is invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: invalid.block.signature
+
+    error_OffsetOutOfRange:
+      description: Parameter `offset` is out of range
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: offset.out.of.range
