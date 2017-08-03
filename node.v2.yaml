@@ -29,7 +29,7 @@ paths:
 
   /about:
     get:
-      summary: Returns the versions and other info about Node, Matcher and other services
+      summary: Get the versions and other info about Node, Matcher and other services
       tags:
         - about
       responses:
@@ -53,110 +53,15 @@ paths:
                         type: string
                         example: 0.7.3
 
-  /blocks:
-    get:
-      summary: Returns the list of last `limit` blocks with `offset` blocks skipped
-      tags:
-        - blocks
-      parameters:
-        - $ref: 'components.yaml#/parameters/query_Limit'
-        - $ref: 'components.yaml#/parameters/query_Offset'
-      responses:
-        200:
-          description: List of blocks and the size of that list
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  size:
-                    $ref: 'components.yaml#/schemas/Size'
-                  list:
-                    type: array
-                    items:
-                      $ref: 'components.yaml#/schemas/Block'
-        400:
-          $ref: 'components.yaml#/responses/error_OffsetOutOfRange'
-
-  /blocks/at/{blockHeight}:
-    get:
-      summary: Returns the block at a given height
-      tags:
-        - blocks
-      parameters:
-        - $ref: 'components.yaml#/parameters/path_BlockHeight'
-      responses:
-        200:
-          description: Block object
-          content:
-            application/json:
-              schema:
-                $ref: 'components.yaml#/schemas/Block'
-        400:
-          $ref: 'components.yaml#/responses/error_InvalidBlockHeight'
-
-  /blocks/height:
-    get:
-      summary: Returns current blockchain height
-      tags:
-        - blocks
-      responses:
-        200:
-          description: Object with blockchain height
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  height:
-                    $ref: 'components.yaml#/schemas/BlockHeight'
-
-  /blocks/signature/{blockSignature}:
-    get:
-      summary: Returns a block by a given signature
-      tags:
-        - blocks
-      parameters:
-        - $ref: 'components.yaml#/parameters/path_BlockSignature'
-      responses:
-        200:
-          description: Block object
-          content:
-            application/json:
-              schema:
-                $ref: 'components.yaml#/schemas/Block'
-        400:
-          $ref: 'components.yaml#/responses/error_InvalidBlockSignature'
-
-  /blocks/signature/swagger{blockSignature}/height:
-    get:
-      summary: Returns height of a given block
-      tags:
-        - blocks
-      parameters:
-        - $ref: 'components.yaml#/parameters/path_BlockSignature'
-      responses:
-        200:
-          description: Object with blockchain height
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  height:
-                    $ref: 'components.yaml#/schemas/BlockHeight'
-        400:
-          $ref: 'components.yaml#/responses/error_InvalidBlockSignature'
-
   /address/{address}/aliases:
     get:
-      summary: Returns the list of address aliases
+      summary: Get the list of address aliases
       tags:
         - address
 
   /address/{address}/balances: # TODO : ?fields=asset__id,balance__regular:
     get:
-      summary: Returns the list of balances for an address
+      summary: Get the list of balances for an address
       tags:
         - address
       parameters:
@@ -187,7 +92,7 @@ paths:
 
   /address/{address}/balances/{assetId}:
     get:
-      summary: Returns detailed balance of a given asset for an address
+      summary: Get detailed balance of a given asset for an address
       tags:
         - address
       parameters:
@@ -207,66 +112,163 @@ paths:
 
   /alias/{alias}/address:
     get:
-      summary: Returns the address which is related to a given alias
+      summary: Get the address which is related to a given alias
+      tags:
+        - alias
 
   /assets:
     get:
-      summary: Returns the list of assets
+      summary: Get the list of assets
       tags:
         - assets
 
   /assets/{assetId}:
     get:
-      summary: Returns detailed info on a given asset
+      summary: Get detailed info on a given asset
       tags:
         - assets
 
   /assets/{assetId}/distribution:
     get:
-      summary: Returns asset balance distribution by accounts
+      summary: Get asset balance distribution by accounts
       tags:
         - assets
 
-  /transaction/alias:
-    post:
-      summary: Create an alias for an address
+  /blocks:
+    get:
+      summary: Get the list of blocks
       tags:
-        - transaction
+        - blocks
+      parameters:
+        - $ref: 'components.yaml#/parameters/query_Limit'
+        - $ref: 'components.yaml#/parameters/query_Offset'
+      responses:
+        200:
+          description: List of blocks and the size of that list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  size:
+                    $ref: 'components.yaml#/schemas/Size'
+                  list:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/Block'
+        400:
+          $ref: 'components.yaml#/responses/error_OffsetOutOfRange'
 
-  # /transaction/asset/issue:
-  # /transaction/asset/reissue:
-  # /transaction/asset/burn:
-
-  # /transaction/leasing/start:
-  # /transaction/leasing/cancel:
-
-  /transaction/transfer:
-    post:
-      summary: Send an amount of an asset to an address
+  /blocks/at/{blockHeight}:
+    get:
+      summary: Get the block at a given height
       tags:
-        - transaction
+        - blocks
+      parameters:
+        - $ref: 'components.yaml#/parameters/path_BlockHeight'
+      responses:
+        200:
+          description: Block object
+          content:
+            application/json:
+              schema:
+                $ref: 'components.yaml#/schemas/Block'
+        400:
+          $ref: 'components.yaml#/responses/error_InvalidBlockHeight'
+
+  /blocks/height:
+    get:
+      summary: Get current blockchain height
+      tags:
+        - blocks
+      responses:
+        200:
+          description: Object with blockchain height
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  height:
+                    $ref: 'components.yaml#/schemas/BlockHeight'
+
+  /blocks/signature/{blockSignature}:
+    get:
+      summary: Get the block by a given signature
+      tags:
+        - blocks
+      parameters:
+        - $ref: 'components.yaml#/parameters/path_BlockSignature'
+      responses:
+        200:
+          description: Block object
+          content:
+            application/json:
+              schema:
+                $ref: 'components.yaml#/schemas/Block'
+        400:
+          $ref: 'components.yaml#/responses/error_InvalidBlockSignature'
+
+  /blocks/signature/swagger{blockSignature}/height:
+    get:
+      summary: Get height of a given block
+      tags:
+        - blocks
+      parameters:
+        - $ref: 'components.yaml#/parameters/path_BlockSignature'
+      responses:
+        200:
+          description: Object with blockchain height
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  height:
+                    $ref: 'components.yaml#/schemas/BlockHeight'
+        400:
+          $ref: 'components.yaml#/responses/error_InvalidBlockSignature'
 
   /transactions:
     get:
-      summary: Returns the list of transactions
+      summary: Get the list of transactions
       tags:
         - transactions
 
   /transactions/{transactionId}:
     get:
-      summary: Returns the details of a given transaction
+      summary: Get the details of a given transaction
+      tags:
+        - transactions
+
+  /transactions/alias:
+    post:
+      summary: Create an alias for an address
+      tags:
+        - transactions
+
+  # /transactions/asset/issue:
+  # /transactions/asset/reissue:
+  # /transactions/asset/burn:
+
+  # /transactions/leasing/start:
+  # /transactions/leasing/cancel:
+
+  /transactions/transfer:
+    post:
+      summary: Send an amount of an asset to an address
       tags:
         - transactions
 
   /utx/address/{address}:
     get:
-      summary: Returns transactions list by a given address
+      summary: Get transactions list by a given address
       tags:
         - utx
 
   /utx/size:
     get:
-      summary: Returns current size of the unconfirmed transactions pool
+      summary: Get current size of the unconfirmed transactions pool
       tags:
         - utx
       responses:
@@ -282,6 +284,6 @@ paths:
 
   /utx/{transactionId}:
     get:
-      summary: Returns transaction details if it's still in unconfirmed transactions pool
+      summary: Get transaction details if it's still in unconfirmed transactions pool
       tags:
         - utx
