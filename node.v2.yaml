@@ -27,45 +27,38 @@ components:
 
 paths:
 
-  /about:
+  /addresses/{address}:
     get:
-      summary: Get the versions and other info about Node, Matcher and other services
+      summary: Get Waves balance and the list of address aliases
       tags:
-        - about
+        - addresses
+      parameters:
+        - $ref: 'components.yaml#/parameters/path_Address'
       responses:
         200:
-          description: Node, Matcher and other services versions and other info
+          description: Waves regular balance and the list of aliases
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  node:
-                    type: object
-                    properties:
-                      version:
-                        type: string
-                        example: 0.7.3
-                  matcher:
-                    type: object
-                    properties:
-                      version:
-                        type: string
-                        example: 0.7.3
+                  wavesBalance:
+                    $ref: 'components.yaml#/schemas/WavesDetailedBalance'
+                  aliases:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/Alias'
+        400:
+          $ref: 'components.yaml#/responses/error_InvalidAddress'
 
-  /address/{address}/aliases:
-    get:
-      summary: Get the list of address aliases
-      tags:
-        - address
-
-  /address/{address}/balances: # TODO : ?fields=asset__id,balance__regular:
+  /addresses/{address}/balances:
     get:
       summary: Get the list of balances for an address
       tags:
-        - address
+        - addresses
       parameters:
         - $ref: 'components.yaml#/parameters/path_Address'
+        - $ref: 'components.yaml#/parameters/query_Assets'
         - $ref: 'components.yaml#/parameters/query_Limit'
         - $ref: 'components.yaml#/parameters/query_Offset'
       responses:
@@ -81,46 +74,59 @@ paths:
                   list:
                     type: array
                     items:
-                      type: object
-                      properties:
-                        asset:
-                          $ref: 'components.yaml#/schemas/Asset'
-                        balance:
-                          $ref: 'components.yaml#/schemas/Balance'
-        400:
+                      $ref: 'components.yaml#/schemas/Balance'
+        400#1:
+          $ref: 'components.yaml#/responses/error_InvalidAddress'
+        400#2:
           $ref: 'components.yaml#/responses/error_OffsetOutOfRange'
 
-  /address/{address}/balances/{assetId}:
+  /addresses/{address}/transactions:
     get:
-      summary: Get detailed balance of a given asset for an address
+      summary: Get the list of transactions for an address
       tags:
-        - address
+        - addresses
       parameters:
-        - $ref: 'components.yaml#/parameters/path_Address'
-        - $ref: 'components.yaml#/parameters/path_AssetId'
+        - $ref: 'components.yaml#/parameters/query_Type'
+        - $ref: 'components.yaml#/parameters/query_Sender'
+        - $ref: 'components.yaml#/parameters/query_Recipient'
+        - $ref: 'components.yaml#/parameters/query_Limit'
+        - $ref: 'components.yaml#/parameters/query_Offset'
+        # TODO : fromTimestamp
+        # TODO : toTimestamp
       responses:
         200:
-          description: Detailed balance of an asset
+          description: List of last transactions or those which match the parameters
           content:
             application/json:
               schema:
-                $ref: 'components.yaml#/schemas/Balance'
-        400#1: # TODO
-          $ref: 'components.yaml#/responses/error_InvalidAddress'
-        400#2: # TODO
-          $ref: 'components.yaml#/responses/error_InvalidAssetId'
+                type: object
+                properties:
+                  size:
+                    $ref: 'components.yaml#/schemas/Size'
+                  list:
+                    type: array
+                    items:
+                      type: object # TODO
 
-  /alias/{alias}/address:
+  /addresses/{address}/transactions/unconfirmed:
+    get:
+      summary: Get transactions list by a given address
+      tags:
+        - addresses
+
+  /aliases/{alias}:
     get:
       summary: Get the address which is related to a given alias
       tags:
-        - alias
+        - aliases
 
   /assets:
     get:
       summary: Get the list of assets
       tags:
         - assets
+      # q
+      # issuer
 
   /assets/{assetId}:
     get:
@@ -140,11 +146,11 @@ paths:
       tags:
         - blocks
       parameters:
-        - $ref: 'components.yaml#/parameters/query_Limit'
-        - $ref: 'components.yaml#/parameters/query_Offset'
+        - $ref: 'components.yaml#/parameters/query_Limit' # from
+        - $ref: 'components.yaml#/parameters/query_Offset' # to
       responses:
         200:
-          description: List of blocks and the size of that list
+          description: List of blocks
           content:
             application/json:
               schema:
@@ -176,6 +182,14 @@ paths:
         400:
           $ref: 'components.yaml#/responses/error_InvalidBlockHeight'
 
+  /blocks/forged-by/{address}:
+    get:
+      summary: Get the list of blocks forged by a given address
+      tags:
+        - blocks
+      # offset
+      # limit
+
   /blocks/height:
     get:
       summary: Get current blockchain height
@@ -192,7 +206,7 @@ paths:
                   height:
                     $ref: 'components.yaml#/schemas/BlockHeight'
 
-  /blocks/signature/{blockSignature}:
+  /blocks/{blockSignature}:
     get:
       summary: Get the block by a given signature
       tags:
@@ -209,31 +223,32 @@ paths:
         400:
           $ref: 'components.yaml#/responses/error_InvalidBlockSignature'
 
-  /blocks/signature/swagger{blockSignature}/height:
-    get:
-      summary: Get height of a given block
-      tags:
-        - blocks
-      parameters:
-        - $ref: 'components.yaml#/parameters/path_BlockSignature'
-      responses:
-        200:
-          description: Object with blockchain height
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  height:
-                    $ref: 'components.yaml#/schemas/BlockHeight'
-        400:
-          $ref: 'components.yaml#/responses/error_InvalidBlockSignature'
-
   /transactions:
-    get:
-      summary: Get the list of transactions
+    post:
+      summary: Issue a transaction of any type
       tags:
         - transactions
+
+      # all for one:
+
+      # /transactions/alias:
+      #   post:
+      #     summary: Create an alias for an address
+      #     tags:
+      #       - transactions
+
+      # /transactions/asset/issue:
+      # /transactions/asset/reissue:
+      # /transactions/asset/burn:
+
+      # /transactions/leasing/start:
+      # /transactions/leasing/cancel:
+
+      # /transactions/transfer:
+      #   post:
+      #     summary: Send an amount of an asset to an address
+      #     tags:
+      #       - transactions
 
   /transactions/{transactionId}:
     get:
@@ -241,36 +256,11 @@ paths:
       tags:
         - transactions
 
-  /transactions/alias:
-    post:
-      summary: Create an alias for an address
-      tags:
-        - transactions
-
-  # /transactions/asset/issue:
-  # /transactions/asset/reissue:
-  # /transactions/asset/burn:
-
-  # /transactions/leasing/start:
-  # /transactions/leasing/cancel:
-
-  /transactions/transfer:
-    post:
-      summary: Send an amount of an asset to an address
-      tags:
-        - transactions
-
-  /utx/address/{address}:
-    get:
-      summary: Get transactions list by a given address
-      tags:
-        - utx
-
-  /utx/size:
+  /transactions/unconfirmed/size:
     get:
       summary: Get current size of the unconfirmed transactions pool
       tags:
-        - utx
+        - transactions
       responses:
         200:
           description: Object with UTX size
@@ -282,8 +272,8 @@ paths:
                   size:
                     $ref: 'components.yaml#/schemas/UtxSize'
 
-  /utx/{transactionId}:
+  /transactions/unconfirmed/{transactionId}:
     get:
       summary: Get transaction details if it's still in unconfirmed transactions pool
       tags:
-        - utx
+        - transactions

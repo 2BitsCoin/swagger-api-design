@@ -23,50 +23,21 @@ schemas:
         type: boolean
         example: false
 
-  AssetDetails:
-    description: Asset full info object
+  Balance:
+    description: ID, name, and regular balance of an asset
     type: object
     properties:
       id:
         $ref: '#/schemas/AssetId'
       name:
-        type: string
-        example: Waves
-      precision:
-        type: integer
-        example: 8
-      issuer:
-        $ref: '#/schemas/Address'
-      quantity:
-        type: integer
-        example: 100000000
-      reissuable:
-        type: boolean
-        example: false
-      # TODO
-
-  Balance:
-    description: Detailed balance object
-    type: object
-    properties:
-      regular:
-        type: integer
-        example: 0
-      generating:
-        type: integer
-        example: 0
-      leased:
-        type: integer
-        example: 0
-      available:
-        type: integer
-        example: 0
-      effective:
-        type: integer
-        example: 0
+        $ref: '#/schemas/AssetName'
+      balance:
+        type: number
+        minimum: 0
+        example: 1000
 
   Block:
-    description: Block supposed to contain transactions
+    description: Block with transactions and metadata
     type: object
     properties:
       version:
@@ -105,6 +76,26 @@ schemas:
         type: integer
         example: 178515
 
+  WavesDetailedBalance:
+    description: Detailed Waves balance object
+    type: object
+    properties:
+      regular:
+        type: integer
+        example: 0
+      generating:
+        type: integer
+        example: 0
+      leased:
+        type: integer
+        example: 0
+      available:
+        type: integer
+        example: 0
+      effective:
+        type: integer
+        example: 0
+
   # Primitives
 
   Address:
@@ -112,10 +103,20 @@ schemas:
     type: string
     example: 3PMgh8ra7v9USWUJxUCxKQKr6PM3MgqNVR8
 
+  Alias:
+    description: _Alias_ | Human-readable shortcut for an address
+    type: string
+    example: sasha
+
   AssetId:
-    description: _AssetId_ | Base58-encoded asset unique ID
+    description: _AssetId_ | Base58-encoded asset unique ID (or WAVES for Waves currency itself)
     type: string
     example: WAVES
+
+  AssetName:
+    description: _AssetName_ | Name of an asset
+    type: string
+    example: Waves
 
   BlockHeight:
     description: _BlockHeight_ | Index of a block in blockchain
@@ -148,6 +149,7 @@ parameters:
     in: path
     name: address
     required: true
+    description: Wallet address
     schema:
       $ref: '#/schemas/Address'
 
@@ -155,6 +157,7 @@ parameters:
     in: path
     name: assetId
     required: true
+    description: ID of an asset
     schema:
       $ref: '#/schemas/AssetId'
 
@@ -176,6 +179,15 @@ parameters:
 
   # Query-related
 
+  query_Assets:
+    in: query
+    name: assets
+    required: false
+    description: Comma-separated IDs of the wanted assets
+    schema:
+      type: string
+      example: WAVES,8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS
+
   query_Limit:
     in: query
     name: limit
@@ -195,6 +207,46 @@ parameters:
     schema:
       type: integer
       default: 0
+
+  query_Recipient:
+    in: query
+    name: recipient
+    required: false
+    description: Transaction recipient
+    schema:
+      oneOf:
+        - $ref: '#/schemas/Address'
+        - $ref: '#/schemas/Alias'
+
+  query_Sender:
+    in: query
+    name: sender
+    required: false
+    description: Transaction sender
+    schema:
+      oneOf:
+        - $ref: '#/schemas/Address'
+        - $ref: '#/schemas/Alias'
+
+  query_Type:
+    in: query
+    name: type
+    required: false
+    description: Transaction type
+    schema:
+      type: string
+      enum:
+        # TODO : condider naming
+        # TODO : check for possibly missing transactions
+        - transfer
+        - issue
+        - reissue
+        - burn
+        - alias
+        - lease
+        - cancelLeasing
+        - exchange
+      example: transfer
 
 responses:
 
