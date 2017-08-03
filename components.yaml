@@ -1,0 +1,256 @@
+schemas:
+
+  # Objects
+
+  Asset:
+    description: Asset main info object
+    type: object
+    properties:
+      id:
+        $ref: '#/schemas/AssetId'
+      name:
+        type: string
+        example: Waves
+      precision:
+        type: integer
+        example: 8
+      issuer:
+        $ref: '#/schemas/Address'
+      quantity:
+        type: integer
+        example: 100000000
+      reissuable:
+        type: boolean
+        example: false
+
+  AssetDetails:
+    description: Asset full info object
+    type: object
+    properties:
+      id:
+        $ref: '#/schemas/AssetId'
+      name:
+        type: string
+        example: Waves
+      precision:
+        type: integer
+        example: 8
+      issuer:
+        $ref: '#/schemas/Address'
+      quantity:
+        type: integer
+        example: 100000000
+      reissuable:
+        type: boolean
+        example: false
+      # TODO
+
+  Balance:
+    description: Detailed balance object
+    type: object
+    properties:
+      regular:
+        type: integer
+        example: 0
+      generating:
+        type: integer
+        example: 0
+      leased:
+        type: integer
+        example: 0
+      available:
+        type: integer
+        example: 0
+      effective:
+        type: integer
+        example: 0
+
+  Block:
+    description: Block supposed to contain transactions
+    type: object
+    properties:
+      version:
+        type: integer
+        example: 2
+      timestamp:
+        type: integer
+        example: 1501505945003
+      reference:
+        type: string
+        example: u31L28eqyi4FZNv877az1s2SawXf2adbG47dpMrektEB2ke4BqprpGDz3py6rbb9n2sUR6SeTSx6MSeusc9yHCp
+      nxt-consensus:
+        type: object
+        properties:
+          baseTarget:
+            type: integer
+            example: 254
+          generationSignature:
+            type: string
+            example: D48jL46a7iyvooDQj25XkYJSm1d7kkAbNYWzzeWffAB7
+      transactions:
+        type: array
+      generator:
+        type: string
+        example: 3NBVqYXrapgJP9atQccdBPAgJPwHDKkh6A8
+      signature:
+        type: string
+        example: 62tPPQS5tEkDScFf6FyXXE71VwFsppp79wF1hwo11saE4Q6MHUF2TN4Yg5zVprNAH4MSwHy5Zm5s5ZGEbTF9n6gz
+      fee:
+        type: number
+        example: 2.007
+      blocksize:
+        type: integer
+        example: 218
+      height:
+        type: integer
+        example: 178515
+
+  # Primitives
+
+  Address:
+    description: _Address_ | Base58-encoded wallet address
+    type: string
+    example: 3PMgh8ra7v9USWUJxUCxKQKr6PM3MgqNVR8
+
+  AssetId:
+    description: _AssetId_ | Base58-encoded asset unique ID
+    type: string
+    example: WAVES
+
+  BlockHeight:
+    description: _BlockHeight_ | Index of a block in blockchain
+    type: integer
+    minimum: 0
+    example: 666
+
+  BlockSignature:
+    description: _BlockSignature_ | Base58-encoded block signature
+    type: string
+    example: 3b2QWFpkTAP94ydewvRc6CyxRtcc7q6DpvYVFFfGERyy5sjD3pAVHdPCCDXi7XKDZePxHD35nJJroaQWUy6EZcmz
+
+  Size:
+    description: _Size_ | Number of items in the correlating `list` property
+    type: integer
+    example: 1
+
+  UtxSize:
+    description: _UtxSize_ | Number of transactions in the unconfirmed transactions pool
+    type: integer
+    minimum: 0
+    maximum: 10000
+    example: 327
+
+parameters:
+
+  # Path-related
+
+  path_Address:
+    in: path
+    name: address
+    required: true
+    schema:
+      $ref: '#/schemas/Address'
+
+  path_AssetId:
+    in: path
+    name: assetId
+    required: true
+    schema:
+      $ref: '#/schemas/AssetId'
+
+  path_BlockHeight:
+    in: path
+    name: blockHeight
+    required: true
+    description: Height of a wanted block
+    schema:
+      $ref: '#/schemas/BlockHeight'
+
+  path_BlockSignature:
+    in: path
+    name: blockSignature
+    required: true
+    description: ID of a wanted block
+    schema:
+      $ref: '#/schemas/BlockSignature'
+
+  # Query-related
+
+  query_Limit:
+    in: query
+    name: limit
+    required: false
+    description: The number of items in list to return
+    schema:
+      type: integer
+      minimum: 10
+      maximum: 100
+      default: 50
+
+  query_Offset:
+    in: query
+    name: offset
+    required: false
+    description: The number of items in list to skip
+    schema:
+      type: integer
+      default: 0
+
+responses:
+
+  # Errors
+
+  error_InvalidAddress:
+    description: Provided address in invalid
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              example: invalid.address
+
+  error_InvalidAssetId:
+      description: Provided asset ID is invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: invalid.asset.id
+
+  error_InvalidBlockHeight:
+      description: Provided height is invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: invalid.block.height
+
+  error_InvalidBlockSignature:
+      description: Provided block signature is invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: invalid.block.signature
+
+  error_OffsetOutOfRange:
+      description: Parameter `offset` is out of range
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: offset.out.of.range

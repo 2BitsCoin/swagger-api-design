@@ -1,0 +1,287 @@
+openapi: "3.0.0"
+
+info:
+  version: 2.0.0
+  title: Waves Node API
+  description: API docs for Waves Node
+  license:
+    name: Apache 2.0
+    url: https://github.com/wavesplatform/Waves/blob/master/LICENSE
+
+servers:
+  - url: https://nodes.wavesplatform.com/api/v2
+    description: Mainnet
+  - url: https://{hostname}:6869/api/v2
+    description: Testnet
+    variables:
+      hostname:
+        enum:
+          - "52.30.47.67"
+          - "52.28.66.217"
+          - "52.77.111.219"
+          - "52.51.92.182"
+        default: "52.30.47.67"
+
+components:
+  $ref: 'components.yaml'
+
+paths:
+
+  /about:
+    get:
+      summary: Returns the versions and other info about Node, Matcher and other services
+      tags:
+        - about
+      responses:
+        200:
+          description: Node, Matcher and other services versions and other info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  node:
+                    type: object
+                    properties:
+                      version:
+                        type: string
+                        example: 0.7.3
+                  matcher:
+                    type: object
+                    properties:
+                      version:
+                        type: string
+                        example: 0.7.3
+
+  /blocks:
+    get:
+      summary: Returns the list of last `limit` blocks with `offset` blocks skipped
+      tags:
+        - blocks
+      parameters:
+        - $ref: 'components.yaml#/parameters/query_Limit'
+        - $ref: 'components.yaml#/parameters/query_Offset'
+      responses:
+        200:
+          description: List of blocks and the size of that list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  size:
+                    $ref: 'components.yaml#/schemas/Size'
+                  list:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/Block'
+        400:
+          $ref: 'components.yaml#/responses/error_OffsetOutOfRange'
+
+  /blocks/at/{blockHeight}:
+    get:
+      summary: Returns the block at a given height
+      tags:
+        - blocks
+      parameters:
+        - $ref: 'components.yaml#/parameters/path_BlockHeight'
+      responses:
+        200:
+          description: Block object
+          content:
+            application/json:
+              schema:
+                $ref: 'components.yaml#/schemas/Block'
+        400:
+          $ref: 'components.yaml#/responses/error_InvalidBlockHeight'
+
+  /blocks/height:
+    get:
+      summary: Returns current blockchain height
+      tags:
+        - blocks
+      responses:
+        200:
+          description: Object with blockchain height
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  height:
+                    $ref: 'components.yaml#/schemas/BlockHeight'
+
+  /blocks/signature/{blockSignature}:
+    get:
+      summary: Returns a block by a given signature
+      tags:
+        - blocks
+      parameters:
+        - $ref: 'components.yaml#/parameters/path_BlockSignature'
+      responses:
+        200:
+          description: Block object
+          content:
+            application/json:
+              schema:
+                $ref: 'components.yaml#/schemas/Block'
+        400:
+          $ref: 'components.yaml#/responses/error_InvalidBlockSignature'
+
+  /blocks/signature/swagger{blockSignature}/height:
+    get:
+      summary: Returns height of a given block
+      tags:
+        - blocks
+      parameters:
+        - $ref: 'components.yaml#/parameters/path_BlockSignature'
+      responses:
+        200:
+          description: Object with blockchain height
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  height:
+                    $ref: 'components.yaml#/schemas/BlockHeight'
+        400:
+          $ref: 'components.yaml#/responses/error_InvalidBlockSignature'
+
+  /address/{address}/aliases:
+    get:
+      summary: Returns the list of address aliases
+      tags:
+        - address
+
+  /address/{address}/balances: # TODO : ?fields=asset__id,balance__regular:
+    get:
+      summary: Returns the list of balances for an address
+      tags:
+        - address
+      parameters:
+        - $ref: 'components.yaml#/parameters/path_Address'
+        - $ref: 'components.yaml#/parameters/query_Limit'
+        - $ref: 'components.yaml#/parameters/query_Offset'
+      responses:
+        200:
+          description: List of assets with balances and the size of that list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  size:
+                    $ref: 'components.yaml#/schemas/Size'
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        asset:
+                          $ref: 'components.yaml#/schemas/Asset'
+                        balance:
+                          $ref: 'components.yaml#/schemas/Balance'
+        400:
+          $ref: 'components.yaml#/responses/error_OffsetOutOfRange'
+
+  /address/{address}/balances/{assetId}:
+    get:
+      summary: Returns detailed balance of a given asset for an address
+      tags:
+        - address
+      parameters:
+        - $ref: 'components.yaml#/parameters/path_Address'
+        - $ref: 'components.yaml#/parameters/path_AssetId'
+      responses:
+        200:
+          description: Detailed balance of an asset
+          content:
+            application/json:
+              schema:
+                $ref: 'components.yaml#/schemas/Balance'
+        400#1: # TODO
+          $ref: 'components.yaml#/responses/error_InvalidAddress'
+        400#2: # TODO
+          $ref: 'components.yaml#/responses/error_InvalidAssetId'
+
+  /alias/{alias}/address:
+    get:
+      summary: Returns the address which is related to a given alias
+
+  /assets:
+    get:
+      summary: Returns the list of assets
+      tags:
+        - assets
+
+  /assets/{assetId}:
+    get:
+      summary: Returns detailed info on a given asset
+      tags:
+        - assets
+
+  /assets/{assetId}/distribution:
+    get:
+      summary: Returns asset balance distribution by accounts
+      tags:
+        - assets
+
+  /transaction/alias:
+    post:
+      summary: Create an alias for an address
+      tags:
+        - transaction
+
+  # /transaction/asset/issue:
+  # /transaction/asset/reissue:
+  # /transaction/asset/burn:
+
+  # /transaction/leasing/start:
+  # /transaction/leasing/cancel:
+
+  /transaction/transfer:
+    post:
+      summary: Send an amount of an asset to an address
+      tags:
+        - transaction
+
+  /transactions:
+    get:
+      summary: Returns the list of transactions
+      tags:
+        - transactions
+
+  /transactions/{transactionId}:
+    get:
+      summary: Returns the details of a given transaction
+      tags:
+        - transactions
+
+  /utx/address/{address}:
+    get:
+      summary: Returns transactions list by a given address
+      tags:
+        - utx
+
+  /utx/size:
+    get:
+      summary: Returns current size of the unconfirmed transactions pool
+      tags:
+        - utx
+      responses:
+        200:
+          description: Object with UTX size
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  size:
+                    $ref: 'components.yaml#/schemas/UtxSize'
+
+  /utx/{transactionId}:
+    get:
+      summary: Returns transaction details if it's still in unconfirmed transactions pool
+      tags:
+        - utx
