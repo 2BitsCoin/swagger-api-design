@@ -225,7 +225,7 @@ paths:
 
   /transactions#transfer:
     post:
-      summary: Issue a transfer transaction (#transfer is not a part of the path)
+      summary: Send a transfer transaction (#transfer is not a part of the path)
       tags:
         - transactions
       requestBody:
@@ -234,14 +234,71 @@ paths:
         200:
           $ref: 'components.yaml#/responses/success_TransactionCreated'
 
-  # /transactions#alias:
+  /transactions#issue:
+    post:
+      summary: Send an asset issue transaction (#issue is not a part of the path)
+      tags:
+        - transactions
+      requestBody:
+        $ref: 'components.yaml#/requestBodies/IssueTransaction'
+      responses:
+        200:
+          $ref: 'components.yaml#/responses/success_TransactionCreated'
 
-  # /transactions#issue:
-  # /transactions#reissue:
-  # /transactions#burn:
+  /transactions#reissue:
+    post:
+      summary: Send an asset reissue transaction (#reissue is not a part of the path)
+      tags:
+        - transactions
+      requestBody:
+        $ref: 'components.yaml#/requestBodies/ReissueTransaction'
+      responses:
+        200:
+          $ref: 'components.yaml#/responses/success_TransactionCreated'
 
-  # /transactions#lease:
-  # /transactions#cancelLeasing:
+  /transactions#burn:
+    post:
+      summary: Send an asset burn transaction (#burn is not a part of the path)
+      tags:
+        - transactions
+      requestBody:
+        $ref: 'components.yaml#/requestBodies/BurnTransaction'
+      responses:
+        200:
+          $ref: 'components.yaml#/responses/success_TransactionCreated'
+
+  /transactions#alias:
+    post:
+      summary: Send an alias creation transaction (#alias is not a part of the path)
+      tags:
+        - transactions
+      requestBody:
+        $ref: 'components.yaml#/requestBodies/AliasTransaction'
+      responses:
+        200:
+          $ref: 'components.yaml#/responses/success_TransactionCreated'
+
+  /transactions#lease:
+    post:
+      summary: Send a leasing start transaction (#lease is not a part of the path)
+      tags:
+        - transactions
+      requestBody:
+        $ref: 'components.yaml#/requestBodies/LeaseTransaction'
+      responses:
+        200:
+          $ref: 'components.yaml#/responses/success_TransactionCreated'
+
+  /transactions#cancelLeasing:
+    post:
+      summary: Send a leasing cancel transaction (#cancelLeasing is not a part of the path)
+      tags:
+        - transactions
+      requestBody:
+        $ref: 'components.yaml#/requestBodies/CancelLeasingTransaction'
+      responses:
+        200:
+          $ref: 'components.yaml#/responses/success_TransactionCreated'
 
   /transactions/{transactionId}:
     get:

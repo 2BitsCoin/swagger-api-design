@@ -114,15 +114,36 @@ schemas:
     minimum: 0
     example: 14.7
 
+  AssetDescription:
+    description: _AssetDescription_ | Arbitrary text about an asset
+    type: string
+    example: Hello!
+
   AssetId:
     description: _AssetId_ | Base58-encoded asset unique ID (or WAVES for Waves currency itself)
     type: string
     example: WAVES
 
+  AssetIsReissuable:
+    description: _AssetIsReissuable_ | Flad telling if an asset is reissuable
+    type: boolean
+    example: false
+
   AssetName:
     description: _AssetName_ | Name of an asset
     type: string
     example: Waves
+
+  AssetPrecision:
+    description: _AssetPrecision_ | Number of decimal digits of an asset
+    type: integer
+    enum: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    example: 8
+
+  AssetQuantity:
+    description: _AssetQuantity_ | Quantity of an asset
+    type: integer
+    example: 100000000
 
   BlockHeight:
     description: _BlockHeight_ | Index of a block in blockchain
@@ -184,7 +205,7 @@ schemas:
       - lease
       - cancelLeasing
       - exchange
-    example: transfer
+    # TODO : rewrite examples in specific cases where this scheme is used
 
   UtxSize:
     description: _UtxSize_ | Number of transactions in the unconfirmed transactions pool
@@ -291,7 +312,7 @@ parameters:
 requestBodies:
 
   TransferTransaction:
-    description: Create a transfer transaction
+    description: Request data object for a transfer transaction
     required: true
     content:
       application/json:
@@ -311,10 +332,158 @@ requestBodies:
               $ref: '#/schemas/Amount'
             feeAssetId:
               $ref: '#/schemas/AssetId'
-            feeAmount:
+            fee:
               $ref: '#/schemas/Amount'
             attachment:
               $ref: '#/schemas/TransactionAttachment'
+            timestamp:
+              $ref: '#/schemas/Timestamp'
+            signature:
+              $ref: '#/schemas/TransactionSignature'
+
+  IssueTransaction:
+    description: Request data object for an asset issue transaction
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            transactionType:
+              $ref: '#/schemas/TransactionType'
+              example: issue
+            senderPublicKey:
+              $ref: '#/schemas/PublicKey'
+            name:
+              $ref: '#/schemas/AssetName'
+            description:
+              $ref: '#/schemas/AssetDescription'
+            precision:
+              $ref: '#/schemas/AssetPrecision'
+            quantity:
+              $ref: '#/schemas/AssetQuantity'
+            reissuable:
+              $ref: '#/schemas/AssetIsReissuable'
+            fee:
+              $ref: '#/schemas/Amount'
+            timestamp:
+              $ref: '#/schemas/Timestamp'
+            signature:
+              $ref: '#/schemas/TransactionSignature'
+
+  ReissueTransaction:
+    description: Request data object for an asset reissue transaction
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            transactionType:
+              $ref: '#/schemas/TransactionType'
+              example: reissue
+            senderPublicKey:
+              $ref: '#/schemas/PublicKey'
+            assetId:
+              $ref: '#/schemas/AssetId'
+            quantity:
+              $ref: '#/schemas/AssetQuantity'
+            reissuable:
+              $ref: '#/schemas/AssetIsReissuable'
+            fee:
+              $ref: '#/schemas/Amount'
+            timestamp:
+              $ref: '#/schemas/Timestamp'
+            signature:
+              $ref: '#/schemas/TransactionSignature'
+
+  BurnTransaction:
+    description: Request data object for an asset burn transaction
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            transactionType:
+              $ref: '#/schemas/TransactionType'
+              example: burn
+            senderPublicKey:
+              $ref: '#/schemas/PublicKey'
+            assetId:
+              $ref: '#/schemas/AssetId'
+            quantity:
+              $ref: '#/schemas/AssetQuantity'
+            fee:
+              $ref: '#/schemas/Amount'
+            timestamp:
+              $ref: '#/schemas/Timestamp'
+            signature:
+              $ref: '#/schemas/TransactionSignature'
+
+  AliasTransaction:
+    description: Request data object for an alias creation transaction
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            transactionType:
+              $ref: '#/schemas/TransactionType'
+              example: alias
+            senderPublicKey:
+              $ref: '#/schemas/PublicKey'
+            alias:
+              $ref: '#/schemas/Alias'
+            fee:
+              $ref: '#/schemas/Amount'
+            timestamp:
+              $ref: '#/schemas/Timestamp'
+            signature:
+              $ref: '#/schemas/TransactionSignature'
+
+  LeaseTransaction:
+    description: Request data object for a leasing start transaction
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            transactionType:
+              $ref: '#/schemas/TransactionType'
+              example: lease
+            senderPublicKey:
+              $ref: '#/schemas/PublicKey'
+            recipient:
+              $ref: '#/schemas/Address'
+            amount:
+              $ref: '#/schemas/Amount'
+            fee:
+              $ref: '#/schemas/Amount'
+            timestamp:
+              $ref: '#/schemas/Timestamp'
+            signature:
+              $ref: '#/schemas/TransactionSignature'
+
+  CancelLeasingTransaction:
+    description: Request data object for a leasing cancel transaction
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            transactionType:
+              $ref: '#/schemas/TransactionType'
+              example: cancelLeasing
+            senderPublicKey:
+              $ref: '#/schemas/PublicKey'
+            transactionId:
+              $ref: '#/schemas/TransactionId'
+            fee:
+              $ref: '#/schemas/Amount'
             timestamp:
               $ref: '#/schemas/Timestamp'
             signature:
