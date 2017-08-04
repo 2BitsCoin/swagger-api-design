@@ -223,32 +223,25 @@ paths:
         400:
           $ref: 'components.yaml#/responses/error_InvalidBlockSignature'
 
-  /transactions:
+  /transactions#transfer:
     post:
-      summary: Issue a transaction of any type
+      summary: Issue a transfer transaction (#transfer is not a part of the path)
       tags:
         - transactions
+      requestBody:
+        $ref: 'components.yaml#/requestBodies/TransferTransaction'
+      responses:
+        200:
+          $ref: 'components.yaml#/responses/success_TransactionCreated'
 
-      # all for one:
+  # /transactions#alias:
 
-      # /transactions/alias:
-      #   post:
-      #     summary: Create an alias for an address
-      #     tags:
-      #       - transactions
+  # /transactions#issue:
+  # /transactions#reissue:
+  # /transactions#burn:
 
-      # /transactions/asset/issue:
-      # /transactions/asset/reissue:
-      # /transactions/asset/burn:
-
-      # /transactions/leasing/start:
-      # /transactions/leasing/cancel:
-
-      # /transactions/transfer:
-      #   post:
-      #     summary: Send an amount of an asset to an address
-      #     tags:
-      #       - transactions
+  # /transactions#lease:
+  # /transactions#cancelLeasing:
 
   /transactions/{transactionId}:
     get:

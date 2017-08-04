@@ -108,6 +108,12 @@ schemas:
     type: string
     example: sasha
 
+  Amount:
+    description: _Amount_ | Amount of Waves or any asset
+    type: number
+    minimum: 0
+    example: 14.7
+
   AssetId:
     description: _AssetId_ | Base58-encoded asset unique ID (or WAVES for Waves currency itself)
     type: string
@@ -129,10 +135,56 @@ schemas:
     type: string
     example: 3b2QWFpkTAP94ydewvRc6CyxRtcc7q6DpvYVFFfGERyy5sjD3pAVHdPCCDXi7XKDZePxHD35nJJroaQWUy6EZcmz
 
+  PrivateKey:
+    description: _PrivateKey_ | Base58-encoded private key bytes
+    type: string
+    example: 2dWyK1EDM1is63EeH3DeZQTm72tG77V8CULqYdCLKiUp
+
+  PublicKey:
+    description: _PublicKey_ | Base58-encoded public key bytes
+    type: string
+    example: CNSX9rvPih5wvRj6gh6aSCoHXoYqTzsGLDLfvuUtV2s8
+
   Size:
     description: _Size_ | Number of items in the correlating `list` property
     type: integer
     example: 1
+
+  Timestamp:
+    description: _Timestamp_ | Transaction issue time in milliseconds
+    type: integer
+    example: 1501793408
+
+  TransactionAttachment:
+    description: _TransactionAttachment_ | Arbitrary bytes attached to a transaction (maximum byte length is 140 bytes)
+    type: string
+    example: d3yC1LKr
+
+  TransactionId:
+    description: _TransactionId_ | Base58-encoded ID of a transaction
+    type: string
+    example: 8Hnenj6d4oyCQxdc2xE9F85vT9zuZ1KEZxcDA6sC2gAc
+
+  TransactionSignature:
+    description: _TransactionSignature_ | Base58-encoded bytes of transaction data signed with sender private key
+    type: string
+    example: 5ngquur4nqX1cVPK3Zaf9KqY1qNH6i7gF5EhaWeS8mZp1LADTVuPXmNUi12jeXSniGry5a7ThsMtWcC73pSU196o
+
+  TransactionType:
+    description: _TransactionType_ | One of the existing transaction types
+    type: string
+    enum:
+      # TODO : condider naming
+      # TODO : check for possibly missing transactions
+      - transfer
+      - issue
+      - reissue
+      - burn
+      - alias
+      - lease
+      - cancelLeasing
+      - exchange
+    example: transfer
 
   UtxSize:
     description: _UtxSize_ | Number of transactions in the unconfirmed transactions pool
@@ -234,21 +286,57 @@ parameters:
     required: false
     description: Transaction type
     schema:
-      type: string
-      enum:
-        # TODO : condider naming
-        # TODO : check for possibly missing transactions
-        - transfer
-        - issue
-        - reissue
-        - burn
-        - alias
-        - lease
-        - cancelLeasing
-        - exchange
-      example: transfer
+      $ref: '#/schemas/TransactionType'
+
+requestBodies:
+
+  TransferTransaction:
+    description: Create a transfer transaction
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            transactionType:
+              $ref: '#/schemas/TransactionType'
+              example: transfer
+            senderPublicKey:
+              $ref: '#/schemas/PublicKey'
+            recipient:
+              $ref: '#/schemas/Address'
+            assetId:
+              $ref: '#/schemas/AssetId'
+            amount:
+              $ref: '#/schemas/Amount'
+            feeAssetId:
+              $ref: '#/schemas/AssetId'
+            feeAmount:
+              $ref: '#/schemas/Amount'
+            attachment:
+              $ref: '#/schemas/TransactionAttachment'
+            timestamp:
+              $ref: '#/schemas/Timestamp'
+            signature:
+              $ref: '#/schemas/TransactionSignature'
 
 responses:
+
+  success_TransactionCreated:
+    description: Success code and name and the ID of new transaction
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: number
+              example: 200
+            name:
+              type: string
+              example: transaction.created
+            transactionId:
+              $ref: '#/schemas/TransactionId'
 
   # Errors
 
@@ -259,50 +347,65 @@ responses:
         schema:
           type: object
           properties:
+            code:
+              type: number
+              example: 400
             name:
               type: string
               example: invalid.address
 
   error_InvalidAssetId:
-      description: Provided asset ID is invalid
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              name:
-                type: string
-                example: invalid.asset.id
+    description: Provided asset ID is invalid
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: number
+              example: 400
+            name:
+              type: string
+              example: invalid.asset.id
 
   error_InvalidBlockHeight:
-      description: Provided height is invalid
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              name:
-                type: string
-                example: invalid.block.height
+    description: Provided height is invalid
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: number
+              example: 400
+            name:
+              type: string
+              example: invalid.block.height
 
   error_InvalidBlockSignature:
-      description: Provided block signature is invalid
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              name:
-                type: string
-                example: invalid.block.signature
+    description: Provided block signature is invalid
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: number
+              example: 400
+            name:
+              type: string
+              example: invalid.block.signature
 
   error_OffsetOutOfRange:
-      description: Parameter `offset` is out of range
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              name:
-                type: string
-                example: offset.out.of.range
+    description: Parameter `offset` is out of range
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: number
+              example: 400
+            name:
+              type: string
+              example: offset.out.of.range
