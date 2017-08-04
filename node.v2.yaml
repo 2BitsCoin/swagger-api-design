@@ -107,6 +107,34 @@ paths:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/TransferTransaction'
+                  list#issue:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/IssueTransaction'
+                  list#reissue:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/ReissueTransaction'
+                  list#burn:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/BurnTransaction'
+                  list#alias:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/AliasTransaction'
+                  list#lease:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/LeaseTransaction'
+                  list#cancelLeasing:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/CancelLeasingTransaction'
+                  list:#exchange:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/ExchangeTransaction'
 
   /addresses/{address}/transactions/unconfirmed:
     get:

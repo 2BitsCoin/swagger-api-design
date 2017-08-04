@@ -23,6 +23,15 @@ schemas:
         type: boolean
         example: false
 
+  AssetPair:
+    description: Pair of assets from Waves Matcher
+    type: object
+    properties:
+      amountAsset:
+        $ref: '#/schemas/AssetId'
+      priceAsset:
+        $ref: '#/schemas/AssetId'
+
   Balance:
     description: ID, name, and regular balance of an asset
     type: object
@@ -76,6 +85,33 @@ schemas:
         type: integer
         example: 178515
 
+  Order:
+    description: Waves Matcher order
+    type: object
+    properties:
+      id:
+        $ref: '#/schemas/OrderId'
+      type:
+        $ref: '#/schemas/OrderType'
+      senderPublicKey:
+        $ref: '#/schemas/PublicKey'
+      matcherPublicKey:
+        $ref: '#/schemas/PublicKey'
+      pair:
+        $ref: '#/schemas/AssetPair'
+      price:
+        $ref: '#/schemas/Amount'
+      amount:
+        $ref: '#/schemas/Amount'
+      matcherFee:
+        $ref: '#/schemas/Amount'
+      timestamp:
+        $ref: '#/schemas/Timestamp'
+      expiration:
+        $ref: '#/schemas/Timestamp'
+      signature:
+        $ref: '#/schemas/OrderSignature'
+
   WavesDetailedBalance:
     description: Detailed Waves balance object
     type: object
@@ -123,6 +159,190 @@ schemas:
         $ref: '#/schemas/Amount'
       feeAssetId:
         $ref: '#/schemas/AssetId'
+      fee:
+        $ref: '#/schemas/Amount'
+      timestamp:
+        $ref: '#/schemas/Timestamp'
+      signature:
+        $ref: '#/schemas/TransactionSignature'
+
+  IssueTransaction:
+    description: TODO # TODO
+    type: object
+    properties:
+      transactionType:
+        $ref: '#/schemas/TransactionType'
+        example: issue
+      id:
+        $ref: '#/schemas/TransactionId'
+      senderPublicKey:
+        $ref: '#/schemas/PublicKey'
+      sender:
+        $ref: '#/schemas/Address'
+      assetId:
+        $ref: '#/schemas/AssetId'
+      name:
+        $ref: '#/schemas/AssetName'
+      description:
+        $ref: '#/schemas/AssetDescription'
+      precision:
+        $ref: '#/schemas/AssetPrecision'
+      quantity:
+        $ref: '#/schemas/AssetQuantity'
+      reissuable:
+        $ref: '#/schemas/AssetIsReissuable'
+      fee:
+        $ref: '#/schemas/Amount'
+      timestamp:
+        $ref: '#/schemas/Timestamp'
+      signature:
+        $ref: '#/schemas/TransactionSignature'
+
+  ReissueTransaction:
+    description: TODO # TODO
+    type: object
+    properties:
+      transactionType:
+        $ref: '#/schemas/TransactionType'
+        example: reissue
+      id:
+        $ref: '#/schemas/TransactionId'
+      senderPublicKey:
+        $ref: '#/schemas/PublicKey'
+      sender:
+        $ref: '#/schemas/Address'
+      assetId:
+        $ref: '#/schemas/AssetId'
+      quantity:
+        $ref: '#/schemas/AssetQuantity'
+      reissuable:
+        $ref: '#/schemas/AssetIsReissuable'
+      fee:
+        $ref: '#/schemas/Amount'
+      timestamp:
+        $ref: '#/schemas/Timestamp'
+      signature:
+        $ref: '#/schemas/TransactionSignature'
+
+  BurnTransaction:
+    description: TODO # TODO
+    type: object
+    properties:
+      transactionType:
+        $ref: '#/schemas/TransactionType'
+        example: reissue
+      id:
+        $ref: '#/schemas/TransactionId'
+      senderPublicKey:
+        $ref: '#/schemas/PublicKey'
+      sender:
+        $ref: '#/schemas/Address'
+      assetId:
+        $ref: '#/schemas/AssetId'
+      quantity:
+        $ref: '#/schemas/AssetQuantity'
+      fee:
+        $ref: '#/schemas/Amount'
+      timestamp:
+        $ref: '#/schemas/Timestamp'
+      signature:
+        $ref: '#/schemas/TransactionSignature'
+
+  AliasTransaction:
+    description: TODO # TODO
+    type: object
+    properties:
+      transactionType:
+        $ref: '#/schemas/TransactionType'
+        example: alias
+      id:
+        $ref: '#/schemas/TransactionId'
+      senderPublicKey:
+        $ref: '#/schemas/PublicKey'
+      sender:
+        $ref: '#/schemas/Address'
+      alias:
+        $ref: '#/schemas/Alias'
+      fee:
+        $ref: '#/schemas/Amount'
+      timestamp:
+        $ref: '#/schemas/Timestamp'
+      signature:
+        $ref: '#/schemas/TransactionSignature'
+
+  LeaseTransaction:
+    description: TODO # TODO
+    type: object
+    properties:
+      transactionType:
+        $ref: '#/schemas/TransactionType'
+        example: lease
+      id:
+        $ref: '#/schemas/TransactionId'
+      senderPublicKey:
+        $ref: '#/schemas/PublicKey'
+      sender:
+        $ref: '#/schemas/Address'
+      recipient:
+        oneOf:
+          - $ref: '#/schemas/Address'
+          - $ref: '#/schemas/Alias'
+      amount:
+        $ref: '#/schemas/Amount'
+      fee:
+        $ref: '#/schemas/Amount'
+      timestamp:
+        $ref: '#/schemas/Timestamp'
+      signature:
+        $ref: '#/schemas/TransactionSignature'
+
+  CancelLeasingTransaction:
+    description: TODO # TODO
+    type: object
+    properties:
+      transactionType:
+        $ref: '#/schemas/TransactionType'
+        example: cancelLeasing
+      id:
+        $ref: '#/schemas/TransactionId'
+      senderPublicKey:
+        $ref: '#/schemas/PublicKey'
+      sender:
+        $ref: '#/schemas/Address'
+      leaseTransactionId:
+        $ref: '#/schemas/TransactionId'
+      fee:
+        $ref: '#/schemas/Amount'
+      timestamp:
+        $ref: '#/schemas/Timestamp'
+      signature:
+        $ref: '#/schemas/TransactionSignature'
+
+  ExchangeTransaction:
+    description: TODO # TODO
+    type: object
+    properties:
+      transactionType:
+        $ref: '#/schemas/TransactionType'
+        example: exchange
+      id:
+        $ref: '#/schemas/TransactionId'
+      senderPublicKey:
+        $ref: '#/schemas/PublicKey'
+      sender:
+        $ref: '#/schemas/Address'
+      amount:
+        $ref: '#/schemas/Amount'
+      price:
+        $ref: '#/schemas/Amount'
+      buyOrder:
+        $ref: '#/schemas/Order'
+      buyMatcherFee:
+        $ref: '#/schemas/Amount'
+      sellOrder:
+        $ref: '#/schemas/Order'
+      sellMatcherFee:
+        $ref: '#/schemas/Amount'
       fee:
         $ref: '#/schemas/Amount'
       timestamp:
@@ -191,6 +411,23 @@ schemas:
     description: _BlockSignature_ | Base58-encoded block signature
     type: string
     example: 3b2QWFpkTAP94ydewvRc6CyxRtcc7q6DpvYVFFfGERyy5sjD3pAVHdPCCDXi7XKDZePxHD35nJJroaQWUy6EZcmz
+
+  OrderId:
+    description: _OrderId_ | Base58-encoded ID of an order on Waves Matcher
+    type: string
+    example: CQHAZMKi7ptwG7AyCqgi7eqKeqKyU1KLzZcuX9XVj9yG
+
+  OrderSignature:
+    description: _OrderSignature_ | Base58-encoded order signature
+    type: string
+    example: 3jNJQbsET3wN8KtnNnbd5BvrJGXxEmqmkzS8ZyscQfowGiqyzo6jys8uZyk5RWHQwuaCbcw6jWemEXqtwrNNnGAr
+
+  OrderType:
+    description: _OrderType_ | Type of an order on Waves Matcher
+    type: string
+    enum:
+      - buy
+      - sell
 
   PrivateKey:
     description: _PrivateKey_ | Base58-encoded private key bytes
