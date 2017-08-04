@@ -96,6 +96,40 @@ schemas:
         type: integer
         example: 0
 
+  # Transactions
+
+  TransferTransaction:
+    description: TODO # TODO
+    type: object
+    properties:
+      transactionType:
+        $ref: '#/schemas/TransactionType'
+        example: transfer
+      id:
+        $ref: '#/schemas/TransactionId'
+      senderPublicKey:
+        $ref: '#/schemas/PublicKey'
+      sender:
+        $ref: '#/schemas/Address'
+      recipient:
+        oneOf:
+          - $ref: '#/schemas/Address'
+          - $ref: '#/schemas/Alias'
+      attachment:
+        $ref: '#/schemas/TransactionAttachment'
+      assetId:
+        $ref: '#/schemas/AssetId'
+      amount:
+        $ref: '#/schemas/Amount'
+      feeAssetId:
+        $ref: '#/schemas/AssetId'
+      fee:
+        $ref: '#/schemas/Amount'
+      timestamp:
+        $ref: '#/schemas/Timestamp'
+      signature:
+        $ref: '#/schemas/TransactionSignature'
+
   # Primitives
 
   Address:
@@ -107,6 +141,8 @@ schemas:
     description: _Alias_ | Human-readable shortcut for an address
     type: string
     example: sasha
+    minLength: 4
+    maxLength: 30
 
   Amount:
     description: _Amount_ | Amount of Waves or any asset
@@ -325,7 +361,9 @@ requestBodies:
             senderPublicKey:
               $ref: '#/schemas/PublicKey'
             recipient:
-              $ref: '#/schemas/Address'
+              oneOf:
+                - $ref: '#/schemas/Address'
+                - $ref: '#/schemas/Alias'
             assetId:
               $ref: '#/schemas/AssetId'
             amount:
@@ -457,7 +495,9 @@ requestBodies:
             senderPublicKey:
               $ref: '#/schemas/PublicKey'
             recipient:
-              $ref: '#/schemas/Address'
+              oneOf:
+                - $ref: '#/schemas/Address'
+                - $ref: '#/schemas/Alias'
             amount:
               $ref: '#/schemas/Amount'
             fee:

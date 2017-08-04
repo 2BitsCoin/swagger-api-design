@@ -95,7 +95,7 @@ paths:
         # TODO : toTimestamp
       responses:
         200:
-          description: List of last transactions or those which match the parameters
+          description: List of last transactions or those which match the parameters (all `list` properties are supposed to be merged)
           content:
             application/json:
               schema:
@@ -103,10 +103,10 @@ paths:
                 properties:
                   size:
                     $ref: 'components.yaml#/schemas/Size'
-                  list:
+                  list#transfer:
                     type: array
                     items:
-                      type: object # TODO
+                      $ref: 'components.yaml#/schemas/TransferTransaction'
 
   /addresses/{address}/transactions/unconfirmed:
     get:
