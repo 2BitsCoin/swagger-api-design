@@ -440,7 +440,7 @@ schemas:
     example: CNSX9rvPih5wvRj6gh6aSCoHXoYqTzsGLDLfvuUtV2s8
 
   Size:
-    description: _Size_ | Number of items in the correlating `list` property
+    description: _Size_ | Number of items in the full response (`list` property may contain not all the items)
     type: integer
     example: 1
 
@@ -534,6 +534,16 @@ parameters:
       type: string
       example: WAVES,8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS
 
+  query_Issuer:
+    in: query
+    name: issuer
+    required: false
+    description: Transaction issuer
+    schema:
+      oneOf:
+        - $ref: '#/schemas/Address'
+        - $ref: '#/schemas/Alias'
+
   query_Limit:
     in: query
     name: limit
@@ -553,6 +563,15 @@ parameters:
     schema:
       type: integer
       default: 0
+
+  query_Q:
+    in: query
+    name: q
+    required: false
+    description: Search query string
+    schema:
+      type: string
+      example: bitc
 
   query_Recipient:
     in: query
@@ -799,6 +818,20 @@ responses:
             name:
               type: string
               example: invalid.address
+
+  error_InvalidAlias:
+    description: Provided alias in invalid
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: number
+              example: 400
+            name:
+              type: string
+              example: invalid.alias
 
   error_InvalidAssetId:
     description: Provided asset ID is invalid

@@ -63,7 +63,7 @@ paths:
         - $ref: 'components.yaml#/parameters/query_Offset'
       responses:
         200:
-          description: List of assets with balances and the size of that list
+          description: List of assets with balances
           content:
             application/json:
               schema:
@@ -135,38 +135,147 @@ paths:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/ExchangeTransaction'
+        400:
+          $ref: 'components.yaml#/responses/error_InvalidAddress'
 
   /addresses/{address}/transactions/unconfirmed:
     get:
-      summary: Get transactions list by a given address
+      summary: Get unconfirmed transactions list by a given address
       tags:
         - addresses
+      responses:
+        200:
+          description: List of unconfirmed transactions by address (all `list` properties are supposed to be merged)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  size:
+                    $ref: 'components.yaml#/schemas/Size'
+                  list#transfer:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/TransferTransaction'
+                  list#issue:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/IssueTransaction'
+                  list#reissue:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/ReissueTransaction'
+                  list#burn:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/BurnTransaction'
+                  list#alias:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/AliasTransaction'
+                  list#lease:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/LeaseTransaction'
+                  list#cancelLeasing:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/CancelLeasingTransaction'
+                  list:#exchange:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/ExchangeTransaction'
+        400:
+          $ref: 'components.yaml#/responses/error_InvalidAddress'
 
   /aliases/{alias}:
     get:
       summary: Get the address which is related to a given alias
       tags:
         - aliases
+      responses:
+        200:
+          description: Object with address
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  address:
+                    $ref: 'components.yaml#/schemas/Address'
+        400:
+          $ref: 'components.yaml#/responses/error_InvalidAlias'
 
   /assets:
     get:
       summary: Get the list of assets
       tags:
         - assets
-      # q
-      # issuer
+      parameters:
+        - $ref: 'components.yaml#/parameters/query_Issuer'
+        - $ref: 'components.yaml#/parameters/query_Q'
+        - $ref: 'components.yaml#/parameters/query_Limit'
+        - $ref: 'components.yaml#/parameters/query_Offset'
+      responses:
+        200:
+          description: List of assets matching the provided parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  size:
+                    $ref: 'components.yaml#/schemas/Size'
+                  list:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/Asset'
 
   /assets/{assetId}:
     get:
-      summary: Get detailed info on a given asset
+      summary: Get info on a given asset and its issue transaction
       tags:
         - assets
+      parameters:
+        - $ref: 'components.yaml#/parameters/path_AssetId'
+      responses:
+        200:
+          # TODO : the idea about array of transactions is controversial, maybe it's more right to add current calculated transactions impact
+          description: Asset info and all its transactions — issue, reissue and burn — in chronological order (all `transactions` fields are supposed to be merged)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  asset:
+                    $ref: 'components.yaml#/schemas/Asset'
+                  transactions#issue:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/IssueTransaction'
+                  transactions#reissue:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/ReissueTransaction'
+                  transactions#burn:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/BurnTransaction'
+        400:
+          $ref: 'components.yaml#/responses/error_InvalidAssetId'
+
 
   /assets/{assetId}/distribution:
     get:
       summary: Get asset balance distribution by accounts
       tags:
         - assets
+      parameters:
+        - $ref: 'components.yaml#/parameters/path_AssetId'
+      responses:
+        # TODO : 200 with map of addresses to regular balances
+        400:
+          $ref: 'components.yaml#/responses/error_InvalidAssetId'
 
   /blocks:
     get:
