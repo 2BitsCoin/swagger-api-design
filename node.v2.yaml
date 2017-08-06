@@ -389,6 +389,8 @@ paths:
         400:
           $ref: 'components.yaml#/responses/error_InvalidBlockSignature'
 
+  # TODO : add errors
+
   /transactions#transfer:
     post:
       summary: Send a transfer transaction (#transfer is not a part of the path)
@@ -466,9 +468,10 @@ paths:
         200:
           $ref: 'components.yaml#/responses/success_TransactionCreated'
 
+  # TODO : decide wheter to create a separate method for unconfirmed transactions (/transactions/unconfirmed/{transactionId})
   /transactions/{transactionId}:
     get:
-      summary: Get the details of a given transaction
+      summary: Get the details of a given transaction, its status and the height of block it belongs to
       tags:
         - transactions
       parameters:
@@ -479,7 +482,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/schemas/TransferTransaction'
+                type: object
+                properties:
+                  blockHeight:
+                    $ref: 'components.yaml#/schemas/BlockHeight'
+                  status:
+                    $ref: 'components.yaml#/schemas/TransactionStatus'
+                  transaction:
+                    $ref: 'components.yaml#/schemas/TransferTransaction'
+        400:
+          $ref: 'components.yaml#/responses/error_InvalidTransactionId'
 
   /transactions/unconfirmed/size:
     get:
@@ -496,18 +508,3 @@ paths:
                 properties:
                   size:
                     $ref: 'components.yaml#/schemas/UtxSize'
-
-  /transactions/unconfirmed/{transactionId}:
-    get:
-      summary: Get transaction details if it's still in unconfirmed transactions pool
-      tags:
-        - transactions
-      parameters:
-        - $ref: 'components.yaml#/parameters/path_TransactionId'
-      responses:
-        200:
-          description: Unconfirmed transaction object (transaction of any type may be present here)
-          content:
-            application/json:
-              schema:
-                $ref: '#/schemas/TransferTransaction'

@@ -470,6 +470,13 @@ schemas:
     type: string
     example: 5ngquur4nqX1cVPK3Zaf9KqY1qNH6i7gF5EhaWeS8mZp1LADTVuPXmNUi12jeXSniGry5a7ThsMtWcC73pSU196o
 
+  TransactionStatus:
+    description: _TransactionStatus_ | Status of a transaction
+    type: string
+    enum:
+      - confirmed
+      - uncomfirmed
+
   TransactionType:
     description: _TransactionType_ | One of the existing transaction types
     type: string
@@ -904,6 +911,34 @@ responses:
             name:
               type: string
               example: invalid.block.signature
+
+  error_InvalidTransactionId:
+    description: Provided transaction ID is invalid
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: number
+              example: 400
+            name:
+              type: string
+              example: invalid.transaction.id
+
+  error_InvalidTransactionSignature:
+    description: Transaction signature doesn't match transaction data
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: number
+              example: 400
+            name:
+              type: string
+              example: invalid.transaction.signature
 
   error_OffsetOutOfRange:
     description: Parameter `offset` is out of range
