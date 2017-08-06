@@ -389,7 +389,7 @@ paths:
         400:
           $ref: 'components.yaml#/responses/error_InvalidBlockSignature'
 
-  # TODO : add errors
+  # TODO : add errors for all cases
 
   /transactions#transfer:
     post:
@@ -401,6 +401,20 @@ paths:
       responses:
         200:
           $ref: 'components.yaml#/responses/success_TransactionCreated'
+        400#1:
+          $ref: 'components.yaml#/responses/error_InvalidTransactionSignature'
+        400#2:
+          $ref: 'components.yaml#/responses/error_InvalidRecipient'
+        400#3:
+          $ref: 'components.yaml#/responses/error_InvalidAssetId'
+        400#4:
+          $ref: 'components.yaml#/responses/error_InvalidAmount'
+        400#5:
+          $ref: 'components.yaml#/responses/error_InvalidFeeAssetId'
+        400#6:
+          $ref: 'components.yaml#/responses/error_InvalidAttachment'
+        400#7:
+          $ref: 'components.yaml#/responses/error_InvalidTimestamp'
 
   /transactions#issue:
     post:
@@ -412,6 +426,14 @@ paths:
       responses:
         200:
           $ref: 'components.yaml#/responses/success_TransactionCreated'
+        400#1:
+          $ref: 'components.yaml#/responses/error_InvalidTransactionSignature'
+        400#2:
+          $ref: 'components.yaml#/responses/error_InvalidPrecision'
+        400#3:
+          $ref: 'components.yaml#/responses/error_InvalidQuantity'
+        400#4:
+          $ref: 'components.yaml#/responses/error_InvalidTimestamp'
 
   /transactions#reissue:
     post:
@@ -423,6 +445,14 @@ paths:
       responses:
         200:
           $ref: 'components.yaml#/responses/success_TransactionCreated'
+        400#1:
+          $ref: 'components.yaml#/responses/error_InvalidTransactionSignature'
+        400#2:
+          $ref: 'components.yaml#/responses/error_InvalidAssetId'
+        400#3:
+          $ref: 'components.yaml#/responses/error_InvalidQuantity'
+        400#4:
+          $ref: 'components.yaml#/responses/error_InvalidTimestamp'
 
   /transactions#burn:
     post:
@@ -434,6 +464,14 @@ paths:
       responses:
         200:
           $ref: 'components.yaml#/responses/success_TransactionCreated'
+        400#1:
+          $ref: 'components.yaml#/responses/error_InvalidTransactionSignature'
+        400#2:
+          $ref: 'components.yaml#/responses/error_InvalidAssetId'
+        400#3:
+          $ref: 'components.yaml#/responses/error_InvalidQuantity'
+        400#4:
+          $ref: 'components.yaml#/responses/error_InvalidTimestamp'
 
   /transactions#alias:
     post:
@@ -445,6 +483,12 @@ paths:
       responses:
         200:
           $ref: 'components.yaml#/responses/success_TransactionCreated'
+        400#1:
+          $ref: 'components.yaml#/responses/error_InvalidTransactionSignature'
+        400#2:
+          $ref: 'components.yaml#/responses/error_InvalidAlias'
+        400#3:
+          $ref: 'components.yaml#/responses/error_InvalidTimestamp'
 
   /transactions#lease:
     post:
@@ -456,6 +500,16 @@ paths:
       responses:
         200:
           $ref: 'components.yaml#/responses/success_TransactionCreated'
+        400#1:
+          $ref: 'components.yaml#/responses/error_InvalidTransactionSignature'
+        400#2:
+          $ref: 'components.yaml#/responses/error_InvalidRecipient'
+        400#3:
+          $ref: 'components.yaml#/responses/error_InvalidAssetId'
+        400#4:
+          $ref: 'components.yaml#/responses/error_InvalidAmount'
+        400#5:
+          $ref: 'components.yaml#/responses/error_InvalidTimestamp'
 
   /transactions#cancelLeasing:
     post:
@@ -467,6 +521,12 @@ paths:
       responses:
         200:
           $ref: 'components.yaml#/responses/success_TransactionCreated'
+        400#1:
+          $ref: 'components.yaml#/responses/error_InvalidTransactionSignature'
+        400#2:
+          $ref: 'components.yaml#/responses/error_InvalidTransactionId'
+        400#3:
+          $ref: 'components.yaml#/responses/error_InvalidTimestamp'
 
   # TODO : decide wheter to create a separate method for unconfirmed transactions (/transactions/unconfirmed/{transactionId})
   /transactions/{transactionId}:

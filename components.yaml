@@ -870,6 +870,20 @@ responses:
               type: string
               example: invalid.alias
 
+  error_InvalidAmount:
+    description: Provided amount in invalid
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: number
+              example: 400
+            name:
+              type: string
+              example: invalid.amount
+
   error_InvalidAssetId:
     description: Provided asset ID is invalid
     content:
@@ -883,6 +897,20 @@ responses:
             name:
               type: string
               example: invalid.asset.id
+
+  error_InvalidAttachment:
+    description: Provided attachment is invalid
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: number
+              example: 400
+            name:
+              type: string
+              example: invalid.attachment
 
   error_InvalidBlockHeight:
     description: Provided height is invalid
@@ -911,6 +939,76 @@ responses:
             name:
               type: string
               example: invalid.block.signature
+
+  error_InvalidFeeAssetId:
+    description: Provided fee asset ID is invalid
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: number
+              example: 400
+            name:
+              type: string
+              example: invalid.fee.asset.id
+
+  error_InvalidPrecision:
+    description: Provided asset precision is invalid
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: number
+              example: 400
+            name:
+              type: string
+              example: invalid.precision
+
+  error_InvalidQuantity:
+    description: Provided asset quantity is invalid
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: number
+              example: 400
+            name:
+              type: string
+              example: invalid.quantity
+
+  error_InvalidRecipient:
+    description: Provided recipient address or alias is invalid
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: number
+              example: 400
+            name:
+              type: string
+              example: invalid.recipient
+
+  error_InvalidTimestamp:
+    description: Provided timestamp is invalid
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: number
+              example: 400
+            name:
+              type: string
+              example: invalid.timestamp
 
   error_InvalidTransactionId:
     description: Provided transaction ID is invalid
