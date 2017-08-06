@@ -41,9 +41,7 @@ schemas:
       name:
         $ref: '#/schemas/AssetName'
       balance:
-        type: number
-        minimum: 0
-        example: 1000
+        $ref: '#/schemas/RegularBalance'
 
   Block:
     description: Block with transactions and metadata
@@ -68,7 +66,10 @@ schemas:
             type: string
             example: D48jL46a7iyvooDQj25XkYJSm1d7kkAbNYWzzeWffAB7
       transactions:
+        decription: Transaction of any type fits here
         type: array
+        items:
+          $ref: '#/schemas/TransferTransaction'
       generator:
         type: string
         example: 3NBVqYXrapgJP9atQccdBPAgJPwHDKkh6A8
@@ -82,8 +83,7 @@ schemas:
         type: integer
         example: 218
       height:
-        type: integer
-        example: 178515
+        $ref: '#/schemas/BlockHeight'
 
   Order:
     description: Waves Matcher order
@@ -112,25 +112,25 @@ schemas:
       signature:
         $ref: '#/schemas/OrderSignature'
 
+  # TODO : check if numbers below are correct
   WavesDetailedBalance:
     description: Detailed Waves balance object
     type: object
     properties:
       regular:
-        type: integer
-        example: 0
+        $ref: '#/schemas/RegularBalance'
       generating:
         type: integer
-        example: 0
+        example: 100
       leased:
         type: integer
-        example: 0
+        example: 43.95
       available:
         type: integer
         example: 0
       effective:
         type: integer
-        example: 0
+        example: 100
 
   # Transactions
 
@@ -405,7 +405,7 @@ schemas:
     description: _BlockHeight_ | Index of a block in blockchain
     type: integer
     minimum: 0
-    example: 666
+    example: 667
 
   BlockSignature:
     description: _BlockSignature_ | Base58-encoded block signature
@@ -438,6 +438,12 @@ schemas:
     description: _PublicKey_ | Base58-encoded public key bytes
     type: string
     example: CNSX9rvPih5wvRj6gh6aSCoHXoYqTzsGLDLfvuUtV2s8
+
+  RegularBalance:
+    description: _RegularBalance_ | Simply a balance of a given asset or Waves regular balance
+    type: number
+    minimum: 0
+    example: 143.95
 
   Size:
     description: _Size_ | Number of items in the full response (`list` property may contain not all the items)
@@ -523,6 +529,14 @@ parameters:
     schema:
       $ref: '#/schemas/BlockSignature'
 
+  path_TransactionId:
+    in: path
+    name: transactionId
+    required: true
+    description: ID of a wanted transaction
+    schema:
+      $ref: '#/schemas/TransactionId'
+
   # Query-related
 
   query_Assets:
@@ -533,6 +547,22 @@ parameters:
     schema:
       type: string
       example: WAVES,8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS
+
+  query_HeightFrom:
+    in: query
+    name: heightFrom
+    required: false
+    description: Height in the blockchain to start getting blocks at
+    schema:
+      $ref: '#/schemas/BlockHeight'
+
+  query_HeightTo:
+    in: query
+    name: heightTo
+    required: false
+    description: Height in the blockchain to end getting blocks at
+    schema:
+      $ref: '#/schemas/BlockHeight'
 
   query_Issuer:
     in: query

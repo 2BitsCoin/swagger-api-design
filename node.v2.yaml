@@ -3,7 +3,7 @@ openapi: "3.0.0"
 info:
   version: 2.0.0
   title: Waves Node API
-  description: API docs for Waves Node
+  description: API docs for Waves Node. Models are shared between all Waves products.
   license:
     name: Apache 2.0
     url: https://github.com/wavesplatform/Waves/blob/master/LICENSE
@@ -273,7 +273,15 @@ paths:
       parameters:
         - $ref: 'components.yaml#/parameters/path_AssetId'
       responses:
-        # TODO : 200 with map of addresses to regular balances
+        200:
+          description: Map of address-to-balance pairs (any `additionalPropN` is a Waves address)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                additionalProperties:
+                  $ref: 'components.yaml#/schemas/RegularBalance'
         400:
           $ref: 'components.yaml#/responses/error_InvalidAssetId'
 
@@ -283,10 +291,13 @@ paths:
       tags:
         - blocks
       parameters:
-        - $ref: 'components.yaml#/parameters/query_Limit' # from
-        - $ref: 'components.yaml#/parameters/query_Offset' # to
+        - $ref: 'components.yaml#/parameters/query_HeightFrom'
+        - $ref: 'components.yaml#/parameters/query_HeightTo'
+        - $ref: 'components.yaml#/parameters/query_Limit'
+        - $ref: 'components.yaml#/parameters/query_Offset'
       responses:
         200:
+          # TODO : decide whether without `heightFrom` and/or `heightTo` the response will contain `limit` blocks stating from 0 + `offset`, or last `limit` blocks
           description: List of blocks
           content:
             application/json:
@@ -324,8 +335,26 @@ paths:
       summary: Get the list of blocks forged by a given address
       tags:
         - blocks
-      # offset
-      # limit
+      parameters:
+        - $ref: 'components.yaml#/parameters/path_Address'
+        - $ref: 'components.yaml#/parameters/query_Limit'
+        - $ref: 'components.yaml#/parameters/query_Offset'
+      responses:
+        200:
+          description: List of blocks by a forger
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  size:
+                    $ref: 'components.yaml#/schemas/Size'
+                  list:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/Block'
+        400:
+          $ref: 'components.yaml#/responses/error_InvalidAddress'
 
   /blocks/height:
     get:
@@ -442,6 +471,15 @@ paths:
       summary: Get the details of a given transaction
       tags:
         - transactions
+      parameters:
+        - $ref: 'components.yaml#/parameters/path_TransactionId'
+      responses:
+        200:
+          description: Transaction object (transaction of any type may be present here)
+          content:
+            application/json:
+              schema:
+                $ref: '#/schemas/TransferTransaction'
 
   /transactions/unconfirmed/size:
     get:
@@ -464,3 +502,12 @@ paths:
       summary: Get transaction details if it's still in unconfirmed transactions pool
       tags:
         - transactions
+      parameters:
+        - $ref: 'components.yaml#/parameters/path_TransactionId'
+      responses:
+        200:
+          description: Unconfirmed transaction object (transaction of any type may be present here)
+          content:
+            application/json:
+              schema:
+                $ref: '#/schemas/TransferTransaction'
