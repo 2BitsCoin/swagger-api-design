@@ -131,7 +131,7 @@ paths:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/CancelLeasingTransaction'
-                  list:#exchange:
+                  list#exchange:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/ExchangeTransaction'
