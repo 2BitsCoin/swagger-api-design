@@ -147,10 +147,10 @@ schemas:
         $ref: '#/schemas/PublicKey'
       sender:
         $ref: '#/schemas/Address'
-      recipient:
-        oneOf:
-          - $ref: '#/schemas/Address'
-          - $ref: '#/schemas/Alias'
+      recipient#address:
+        $ref: '#/schemas/Address'
+      recipient#alias:
+        $ref: '#/schemas/Alias'
       attachment:
         $ref: '#/schemas/TransactionAttachment'
       assetId:
@@ -283,10 +283,10 @@ schemas:
         $ref: '#/schemas/PublicKey'
       sender:
         $ref: '#/schemas/Address'
-      recipient:
-        oneOf:
-          - $ref: '#/schemas/Address'
-          - $ref: '#/schemas/Alias'
+      recipient#address:
+        $ref: '#/schemas/Address'
+      recipient#alias:
+        $ref: '#/schemas/Alias'
       amount:
         $ref: '#/schemas/Amount'
       fee:
@@ -653,10 +653,10 @@ requestBodies:
               example: transfer
             senderPublicKey:
               $ref: '#/schemas/PublicKey'
-            recipient:
-              oneOf:
-                - $ref: '#/schemas/Address'
-                - $ref: '#/schemas/Alias'
+            recipient#address:
+              $ref: '#/schemas/Address'
+            recipient#alias:
+              $ref: '#/schemas/Alias'
             assetId:
               $ref: '#/schemas/AssetId'
             amount:
@@ -787,10 +787,10 @@ requestBodies:
               example: lease
             senderPublicKey:
               $ref: '#/schemas/PublicKey'
-            recipient:
-              oneOf:
-                - $ref: '#/schemas/Address'
-                - $ref: '#/schemas/Alias'
+            recipient#address:
+              $ref: '#/schemas/Address'
+            recipient#alias:
+              $ref: '#/schemas/Alias'
             amount:
               $ref: '#/schemas/Amount'
             fee:
