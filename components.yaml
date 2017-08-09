@@ -440,7 +440,7 @@ schemas:
     example: CNSX9rvPih5wvRj6gh6aSCoHXoYqTzsGLDLfvuUtV2s8
 
   RegularBalance:
-    description: _RegularBalance_ | Simply a balance of a given asset or Waves regular balance
+    description: _RegularBalance_ | Simply a balance of a given asset or Waves regular balance (it is always a float number)
     type: number
     minimum: 0
     example: 143.95
