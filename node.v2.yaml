@@ -143,6 +143,9 @@ paths:
       summary: Get unconfirmed transactions list by a given address
       tags:
         - addresses
+      parameters:
+        - $ref: 'components.yaml#/parameters/query_Limit'
+        - $ref: 'components.yaml#/parameters/query_Offset'
       responses:
         200:
           description: List of unconfirmed transactions by address (all `list` properties are supposed to be merged)
