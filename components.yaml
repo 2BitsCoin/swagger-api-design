@@ -493,8 +493,8 @@ schemas:
       - exchange
     # TODO : rewrite examples in specific cases where this scheme is used
 
-  UtxSize:
-    description: _UtxSize_ | Number of transactions in the unconfirmed transactions pool
+  TransactionsCount:
+    description: _TransactionsCount_ | Number of transactions in the unconfirmed transactions pool
     type: integer
     minimum: 0
     maximum: 10000

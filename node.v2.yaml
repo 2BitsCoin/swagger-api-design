@@ -138,6 +138,29 @@ paths:
         400:
           $ref: 'components.yaml#/responses/error_InvalidAddress'
 
+  /addresses/{address}/transactions/size:
+    get:
+      summary: Get the number of all transactions by an address
+      tags:
+        - addresses
+      parameters:
+        - $ref: 'components.yaml#/parameters/query_Type'
+        - $ref: 'components.yaml#/parameters/query_Sender'
+        - $ref: 'components.yaml#/parameters/query_Recipient'
+      responses:
+        200:
+          description: Object with the number of confirmed transactions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    $ref: 'components.yaml#/schemas/TransactionsCount'
+        400:
+          $ref: 'components.yaml#/responses/error_InvalidAddress'
+
+
   /addresses/{address}/transactions/unconfirmed:
     get:
       summary: Get unconfirmed transactions list by a given address
@@ -188,6 +211,28 @@ paths:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/ExchangeTransaction'
+        400:
+          $ref: 'components.yaml#/responses/error_InvalidAddress'
+
+  /addresses/{address}/transactions/unconfirmed/size:
+    get:
+      summary: Get the number of all unconfirmed transactions by an address
+      tags:
+        - addresses
+      parameters:
+        - $ref: 'components.yaml#/parameters/query_Type'
+        - $ref: 'components.yaml#/parameters/query_Sender'
+        - $ref: 'components.yaml#/parameters/query_Recipient'
+      responses:
+        200:
+          description: Object with the number of unconfirmed transactions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    $ref: 'components.yaml#/schemas/TransactionsCount'
         400:
           $ref: 'components.yaml#/responses/error_InvalidAddress'
 
@@ -589,4 +634,4 @@ paths:
                 type: object
                 properties:
                   size:
-                    $ref: 'components.yaml#/schemas/UtxSize'
+                    $ref: 'components.yaml#/schemas/TransactionsCount'
