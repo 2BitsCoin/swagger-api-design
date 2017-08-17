@@ -410,6 +410,19 @@ paths:
         400:
           $ref: 'components.yaml#/responses/error_InvalidBlockSignature'
 
+  /fees:
+    get:
+      summary: Get accepted fees info
+      tags:
+        - fees
+      responses:
+        200:
+          description: Map of asset IDs and amount for fees
+          content:
+            application/json:
+              schema:
+                $ref: 'components.yaml#/schemas/Fees'
+
   # TODO : add errors for all cases
 
   /transactions#transfer:

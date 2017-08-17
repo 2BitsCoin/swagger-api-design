@@ -85,6 +85,35 @@ schemas:
       height:
         $ref: '#/schemas/BlockHeight'
 
+  Fees:
+    description: Object with minimum fee amounts for every transaction type
+    type: object
+    properties:
+      transferFee:
+        $ref: '#/schemas/FeeAssetsToAmounts'
+      issueFee:
+        $ref: '#/schemas/FeeAssetsToAmounts'
+      reissueFee:
+        $ref: '#/schemas/FeeAssetsToAmounts'
+      burnFee:
+        $ref: '#/schemas/FeeAssetsToAmounts'
+      aliasFee:
+        $ref: '#/schemas/FeeAssetsToAmounts'
+      leaseFee:
+        $ref: '#/schemas/FeeAssetsToAmounts'
+      cancelLeasingFee:
+        $ref: '#/schemas/FeeAssetsToAmounts'
+      exchangeFee:
+        $ref: '#/schemas/FeeAssetsToAmounts'
+
+  FeeAssetsToAmounts:
+    description: Map of IDs of assets to amounts in those assets
+    type: object
+    additionalProperties:
+      $ref: '#/schemas/Amount'
+    example:
+      WAVES: 0.001
+
   Order:
     description: Waves Matcher order
     type: object
