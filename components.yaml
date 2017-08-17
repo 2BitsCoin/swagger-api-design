@@ -382,16 +382,16 @@ schemas:
   # Primitives
 
   Address:
-    description: _Address_ | Base58-encoded wallet address
+    description: _Address_ | Prefix 'address:' and Base58-encoded wallet address
     type: string
-    example: 3PMgh8ra7v9USWUJxUCxKQKr6PM3MgqNVR8
+    example: address:3PMgh8ra7v9USWUJxUCxKQKr6PM3MgqNVR8
 
   Alias:
-    description: _Alias_ | Human-readable shortcut for an address
+    description: _Alias_ | Prefix 'alias:X:' (where X is replaced with network byte) and human-readable shortcut for an address
     type: string
-    example: sasha
-    minLength: 4
-    maxLength: 30
+    example: alias:W:sasha
+    minLength: 12
+    maxLength: 38
 
   Amount:
     description: _Amount_ | Amount of Waves or any asset
