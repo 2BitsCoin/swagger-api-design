@@ -97,7 +97,7 @@ schemas:
         $ref: '#/schemas/FeeAssetsToAmounts'
       burnFee:
         $ref: '#/schemas/FeeAssetsToAmounts'
-      aliasFee:
+      createAliasFee:
         $ref: '#/schemas/FeeAssetsToAmounts'
       leaseFee:
         $ref: '#/schemas/FeeAssetsToAmounts'
@@ -277,13 +277,13 @@ schemas:
       signature:
         $ref: '#/schemas/TransactionSignature'
 
-  AliasTransaction:
+  CreateAliasTransaction:
     description: TODO # TODO
     type: object
     properties:
       transactionType:
         $ref: '#/schemas/TransactionType'
-        example: alias
+        example: createAlias
       id:
         $ref: '#/schemas/TransactionId'
       senderPublicKey:
@@ -516,7 +516,7 @@ schemas:
       - issue
       - reissue
       - burn
-      - alias
+      - createAlias
       - lease
       - cancelLeasing
       - exchange
@@ -781,7 +781,7 @@ requestBodies:
             signature:
               $ref: '#/schemas/TransactionSignature'
 
-  AliasTransaction:
+  CreateAliasTransaction:
     description: Request data object for an alias creation transaction
     required: true
     content:
@@ -791,7 +791,7 @@ requestBodies:
           properties:
             transactionType:
               $ref: '#/schemas/TransactionType'
-              example: alias
+              example: createAlias
             senderPublicKey:
               $ref: '#/schemas/PublicKey'
             alias:

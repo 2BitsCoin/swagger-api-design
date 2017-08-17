@@ -119,10 +119,10 @@ paths:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/BurnTransaction'
-                  list#alias:
+                  list#createAlias:
                     type: array
                     items:
-                      $ref: 'components.yaml#/schemas/AliasTransaction'
+                      $ref: 'components.yaml#/schemas/CreateAliasTransaction'
                   list#lease:
                     type: array
                     items:
@@ -172,10 +172,10 @@ paths:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/BurnTransaction'
-                  list#alias:
+                  list#createAlias:
                     type: array
                     items:
-                      $ref: 'components.yaml#/schemas/AliasTransaction'
+                      $ref: 'components.yaml#/schemas/CreateAliasTransaction'
                   list#lease:
                     type: array
                     items:
@@ -507,13 +507,13 @@ paths:
         400#4:
           $ref: 'components.yaml#/responses/error_InvalidTimestamp'
 
-  /transactions#alias:
+  /transactions#createAlias:
     post:
-      summary: Send an alias creation transaction (#alias is not a part of the path)
+      summary: Send an alias creation transaction (#createAlias is not a part of the path)
       tags:
         - transactions
       requestBody:
-        $ref: 'components.yaml#/requestBodies/AliasTransaction'
+        $ref: 'components.yaml#/requestBodies/CreateAliasTransaction'
       responses:
         200:
           $ref: 'components.yaml#/responses/success_TransactionCreated'
