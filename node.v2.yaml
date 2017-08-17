@@ -269,7 +269,6 @@ paths:
             application/json:
               schema:
                 type: object
-                properties:
                 additionalProperties:
                   $ref: 'components.yaml#/schemas/RegularBalance'
         400:
