@@ -414,7 +414,7 @@ schemas:
     example: Hello!
 
   AssetId:
-    description: _AssetId_ | Base58-encoded asset unique ID (or WAVES for Waves currency itself)
+    description: _AssetId_ | Base58-encoded asset unique ID (or `WAVES` for Waves currency itself) | Note that for signatures an empty string is used instead of `WAVES`
     type: string
     example: WAVES
 
