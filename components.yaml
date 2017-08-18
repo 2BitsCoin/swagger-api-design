@@ -180,6 +180,8 @@ schemas:
         $ref: '#/schemas/Address'
       recipient#alias:
         $ref: '#/schemas/Alias'
+      recipientAddress:
+        $ref: '#/schemas/AddressUnprefixed'
       attachment:
         $ref: '#/schemas/TransactionAttachment'
       assetId:
@@ -316,6 +318,8 @@ schemas:
         $ref: '#/schemas/Address'
       recipient#alias:
         $ref: '#/schemas/Alias'
+      recipientAddress:
+        $ref: '#/schemas/AddressUnprefixed'
       amount:
         $ref: '#/schemas/Amount'
       fee:
@@ -385,6 +389,11 @@ schemas:
     description: _Address_ | Prefix 'address:' and Base58-encoded wallet address
     type: string
     example: address:3PMgh8ra7v9USWUJxUCxKQKr6PM3MgqNVR8
+
+  AddressUnprefixed:
+    description: _AddressUnprefixed_ | Base58-encoded wallet address only
+    type: string
+    example: 3PMgh8ra7v9USWUJxUCxKQKr6PM3MgqNVR8
 
   Alias:
     description: _Alias_ | Prefix 'alias:X:' (where X is replaced with network byte) and human-readable shortcut for an address
@@ -510,7 +519,6 @@ schemas:
     description: _TransactionType_ | One of the existing transaction types
     type: string
     enum:
-      # TODO : condider naming
       # TODO : check for possibly missing transactions
       - transfer
       - issue
