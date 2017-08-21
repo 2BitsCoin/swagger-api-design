@@ -377,22 +377,6 @@ paths:
         400:
           $ref: 'components.yaml#/responses/error_InvalidAddress'
 
-  /blocks/height:
-    get:
-      summary: Get current blockchain height
-      tags:
-        - blocks
-      responses:
-        200:
-          description: Object with blockchain height
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  height:
-                    $ref: 'components.yaml#/schemas/BlockHeight'
-
   /blocks/{blockSignature}:
     get:
       summary: Get the block by a given signature
@@ -423,23 +407,31 @@ paths:
               schema:
                 $ref: 'components.yaml#/schemas/Fees'
 
-  # TODO : add errors for all cases
-
-  /score:
+  /info:
     get:
-      summary: Get the score of the Node
+      summary: Get the information about the Node
       tags:
-        - score
+        - info
       responses:
         200:
-          description: Object with the Node score
+          description: Node info object
           content:
             application/json:
               schema:
                 type: object
                 properties:
+                  name:
+                    type: string
+                    example: waves-official-eu-node-3
+                  version:
+                    type: string
+                    example: 0.7.6
+                  height:
+                    $ref: 'components.yaml#/schemas/BlockHeight'
                   score:
                     $ref: 'components.yaml#/schemas/Score'
+
+  # TODO : add errors for all cases
 
   /transactions#transfer:
     post:
