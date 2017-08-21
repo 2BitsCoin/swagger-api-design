@@ -71,19 +71,19 @@ schemas:
         items:
           $ref: '#/schemas/TransferTransaction'
       generator:
-        type: string
-        example: 3NBVqYXrapgJP9atQccdBPAgJPwHDKkh6A8
+        $ref: '#/schemas/Address'
       signature:
         type: string
         example: 62tPPQS5tEkDScFf6FyXXE71VwFsppp79wF1hwo11saE4Q6MHUF2TN4Yg5zVprNAH4MSwHy5Zm5s5ZGEbTF9n6gz
       fee:
-        type: number
-        example: 2.007
+        $ref: '#/schemas/Amount'
       blocksize:
         type: integer
         example: 218
       height:
         $ref: '#/schemas/BlockHeight'
+      score:
+        $ref: '#/schemas/Score'
 
   Fees:
     description: Object with minimum fee amounts for every transaction type
@@ -482,6 +482,11 @@ schemas:
     type: number
     minimum: 0
     example: 143.95
+
+  Score:
+    description: _Score_ | Score of the blockchain on the Node
+    type: long
+    example: 2421273102391
 
   Size:
     description: _Size_ | Number of items in the full response (`list` property may contain not all the items)

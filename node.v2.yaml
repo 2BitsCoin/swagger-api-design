@@ -425,6 +425,22 @@ paths:
 
   # TODO : add errors for all cases
 
+  /score:
+    get:
+      summary: Get the score of the Node
+      tags:
+        - score
+      responses:
+        200:
+          description: Object with the Node score
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  score:
+                    $ref: 'components.yaml#/schemas/Score'
+
   /transactions#transfer:
     post:
       summary: Send a transfer transaction (#transfer is not a part of the path)
