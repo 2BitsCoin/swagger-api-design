@@ -9,19 +9,17 @@ schemas:
       id:
         $ref: '#/schemas/AssetId'
       name:
-        type: string
-        example: Waves
+        $ref: '#/schemas/AssetName'
       precision:
-        type: integer
-        example: 8
+        $ref: '#/schemas/AssetPrecision'
       issuer:
         $ref: '#/schemas/Address'
       quantity:
-        type: integer
-        example: 100000000
+        $ref: '#/schemas/AssetQuantity'
       reissuable:
-        type: boolean
-        example: false
+        $ref: '#/schemas/AssetIsReissuable'
+      timestamp:
+        $ref: '#/schemas/Timestamp'
 
   AssetPair:
     description: Pair of assets from Waves Matcher
