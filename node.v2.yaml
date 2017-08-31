@@ -71,7 +71,7 @@ paths:
                 properties:
                   size:
                     $ref: 'components.yaml#/schemas/Size'
-                  list:
+                  balances:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/Balance'
@@ -103,35 +103,35 @@ paths:
                 properties:
                   size:
                     $ref: 'components.yaml#/schemas/Size'
-                  list#transfer:
+                  transactions#transfer:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/TransferTransaction'
-                  list#issue:
+                  transactions#issue:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/IssueTransaction'
-                  list#reissue:
+                  transactions#reissue:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/ReissueTransaction'
-                  list#burn:
+                  transactions#burn:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/BurnTransaction'
-                  list#createAlias:
+                  transactions#createAlias:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/CreateAliasTransaction'
-                  list#lease:
+                  transactions#lease:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/LeaseTransaction'
-                  list#cancelLeasing:
+                  transactions#cancelLeasing:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/CancelLeasingTransaction'
-                  list#exchange:
+                  transactions#exchange:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/ExchangeTransaction'
@@ -156,35 +156,35 @@ paths:
                 properties:
                   size:
                     $ref: 'components.yaml#/schemas/Size'
-                  list#transfer:
+                  transactions#transfer:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/TransferTransaction'
-                  list#issue:
+                  transactions#issue:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/IssueTransaction'
-                  list#reissue:
+                  transactions#reissue:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/ReissueTransaction'
-                  list#burn:
+                  transactions#burn:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/BurnTransaction'
-                  list#createAlias:
+                  transactions#createAlias:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/CreateAliasTransaction'
-                  list#lease:
+                  transactions#lease:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/LeaseTransaction'
-                  list#cancelLeasing:
+                  transactions#cancelLeasing:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/CancelLeasingTransaction'
-                  list:#exchange:
+                  transactions#exchange:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/ExchangeTransaction'
@@ -229,7 +229,7 @@ paths:
                 properties:
                   size:
                     $ref: 'components.yaml#/schemas/Size'
-                  list:
+                  assets:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/Asset'
@@ -327,7 +327,7 @@ paths:
                 properties:
                   size:
                     $ref: 'components.yaml#/schemas/Size'
-                  list:
+                  blocks:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/Block'
@@ -370,7 +370,7 @@ paths:
                 properties:
                   size:
                     $ref: 'components.yaml#/schemas/Size'
-                  list:
+                  blocks:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/Block'
