@@ -936,9 +936,6 @@ responses:
         schema:
           type: object
           properties:
-            code:
-              type: number
-              example: 400
             name:
               type: string
               example: invalid.address
@@ -950,9 +947,6 @@ responses:
         schema:
           type: object
           properties:
-            code:
-              type: number
-              example: 400
             name:
               type: string
               example: invalid.alias
@@ -964,9 +958,6 @@ responses:
         schema:
           type: object
           properties:
-            code:
-              type: number
-              example: 400
             name:
               type: string
               example: invalid.amount
@@ -978,12 +969,15 @@ responses:
         schema:
           type: object
           properties:
-            code:
-              type: number
-              example: 400
             name:
               type: string
               example: invalid.asset.id
+            vars:
+              type: object
+              properties:
+                wrongAssetId:
+                  type: string
+                  example: random string
 
   error_InvalidAttachment:
     description: Provided attachment is invalid
@@ -992,9 +986,6 @@ responses:
         schema:
           type: object
           properties:
-            code:
-              type: number
-              example: 400
             name:
               type: string
               example: invalid.attachment
@@ -1006,9 +997,6 @@ responses:
         schema:
           type: object
           properties:
-            code:
-              type: number
-              example: 400
             name:
               type: string
               example: invalid.block.height
@@ -1020,9 +1008,6 @@ responses:
         schema:
           type: object
           properties:
-            code:
-              type: number
-              example: 400
             name:
               type: string
               example: invalid.block.signature
@@ -1034,9 +1019,6 @@ responses:
         schema:
           type: object
           properties:
-            code:
-              type: number
-              example: 400
             name:
               type: string
               example: invalid.fee.asset.id
@@ -1048,9 +1030,6 @@ responses:
         schema:
           type: object
           properties:
-            code:
-              type: number
-              example: 400
             name:
               type: string
               example: invalid.precision
@@ -1062,9 +1041,6 @@ responses:
         schema:
           type: object
           properties:
-            code:
-              type: number
-              example: 400
             name:
               type: string
               example: invalid.public.key
@@ -1076,9 +1052,6 @@ responses:
         schema:
           type: object
           properties:
-            code:
-              type: number
-              example: 400
             name:
               type: string
               example: invalid.quantity
@@ -1090,9 +1063,6 @@ responses:
         schema:
           type: object
           properties:
-            code:
-              type: number
-              example: 400
             name:
               type: string
               example: invalid.recipient
@@ -1104,9 +1074,6 @@ responses:
         schema:
           type: object
           properties:
-            code:
-              type: number
-              example: 400
             name:
               type: string
               example: invalid.timestamp
@@ -1118,9 +1085,6 @@ responses:
         schema:
           type: object
           properties:
-            code:
-              type: number
-              example: 400
             name:
               type: string
               example: invalid.transaction.id
@@ -1132,9 +1096,6 @@ responses:
         schema:
           type: object
           properties:
-            code:
-              type: number
-              example: 400
             name:
               type: string
               example: invalid.transaction.signature
@@ -1146,9 +1107,6 @@ responses:
         schema:
           type: object
           properties:
-            code:
-              type: number
-              example: 400
             name:
               type: string
               example: offset.out.of.range
