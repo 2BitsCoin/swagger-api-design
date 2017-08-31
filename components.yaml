@@ -406,6 +406,11 @@ schemas:
     minimum: 0
     example: 14.7
 
+  ArbitrarySignature:
+    description: _ArbitrarySignature_ | Base58-encoded signature of any arbitrary chosen data
+    type: string
+    example: 4DqmA8kut5V6Fag68D37CHrPd6KzwB3nXScWv91X65MbKujEYZE5QKtkZySXtdZLKdaL6657w4Y2DmnBrhuMfric
+
   AssetDescription:
     description: _AssetDescription_ | Arbitrary text about an asset
     type: string
@@ -576,6 +581,14 @@ parameters:
     schema:
       $ref: '#/schemas/BlockSignature'
 
+  path_PublicKey:
+    in: path
+    name: publicKey
+    required: true
+    description: User public key
+    schema:
+      $ref: '#/schemas/PublicKey'
+
   path_TransactionId:
     in: path
     name: transactionId
@@ -585,6 +598,14 @@ parameters:
       $ref: '#/schemas/TransactionId'
 
   # Query-related
+
+  query_AmountAsset:
+    in: query
+    name: amountAsset
+    required: false
+    description: Amount asset ID in DEX
+    schema:
+      $ref: '#/schemas/AssetId'
 
   query_Assets:
     in: query
@@ -641,6 +662,14 @@ parameters:
       type: integer
       default: 0
 
+  query_PriceAsset:
+    in: query
+    name: amountAsset
+    required: false
+    description: Price asset ID in DEX
+    schema:
+      $ref: '#/schemas/AssetId'
+
   query_Q:
     in: query
     name: q
@@ -677,6 +706,24 @@ parameters:
     description: Transaction type
     schema:
       $ref: '#/schemas/TransactionType'
+
+  # Header-related
+
+  header_Signature:
+    in: header
+    name: Signature
+    required: true
+    description: Signature of a public key and the data from other header parameters (e.g. Timestamp)
+    schema:
+      $ref: '#/schemas/ArbitrarySignature'
+
+  header_Timestamp:
+    in: header
+    name: Timestamp
+    required: true
+    description: Timestamp of a (usually) GET request
+    schema:
+      $ref: '#/schemas/Timestamp'
 
 requestBodies:
 
@@ -1008,6 +1055,20 @@ responses:
               type: string
               example: invalid.precision
 
+  error_InvalidPublicKey:
+    description: Provided public key is invalid
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: number
+              example: 400
+            name:
+              type: string
+              example: invalid.public.key
+
   error_InvalidQuantity:
     description: Provided asset quantity is invalid
     content:
@@ -1064,7 +1125,7 @@ responses:
               type: string
               example: invalid.transaction.id
 
-  error_InvalidTransactionSignature:
+  error_InvalidSignature:
     description: Transaction signature doesn't match transaction data
     content:
       application/json:

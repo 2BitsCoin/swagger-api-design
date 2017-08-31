@@ -1,0 +1,81 @@
+openapi: "3.0.0"
+
+info:
+  version: 2.0.0
+  title: Waves Matcher API
+  description: API docs for Waves Matcher. Models are shared between all Waves products.
+  license:
+    name: Apache 2.0
+    url: https://github.com/wavesplatform/Waves/blob/master/LICENSE
+
+servers:
+  - url: https://matcher.wavesplatform.com/api/v2
+    description: Mainnet
+  - url: https://testnet1.matcher.wavesnodes.com/api/v2
+    description: Testnet
+
+components:
+  $ref: 'components.yaml'
+
+paths:
+
+  /info:
+    get:
+      summary: Get matcher public key and version
+      tags:
+        - info
+      responses:
+        200:
+          description: Object with the matcher key and metadata
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  matcherPublicKey:
+                    $ref: 'components.yaml#/schemas/PublicKey'
+                  version:
+                    type: string
+                    example: 0.7.6
+
+  # /orderbooks/{amountAsset}/{priceAsset}:
+  #   get:
+
+  # /orders:
+  #   post:
+
+  /orders/{publicKey}:
+    get:
+      summary: Get the list of user own orders (this method requires some data signed with user private key)
+      tags:
+        - orders
+      parameters:
+        - $ref: 'components.yaml#/parameters/path_PublicKey'
+        - $ref: 'components.yaml#/parameters/header_Signature'
+        - $ref: 'components.yaml#/parameters/header_Timestamp'
+        - $ref: 'components.yaml#/parameters/query_AmountAsset'
+        - $ref: 'components.yaml#/parameters/query_PriceAsset'
+        - $ref: 'components.yaml#/parameters/query_Limit'
+        - $ref: 'components.yaml#/parameters/query_Offset'
+      responses:
+        200:
+          description: List of user orders sorted by status, then by timestamp
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  size:
+                    $ref: 'components.yaml#/schemas/Size'
+                  orders:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/Order'
+        400#1:
+          $ref: 'components.yaml#/responses/error_InvalidPublicKey'
+        400#2:
+          $ref: 'components.yaml#/responses/error_InvalidSignature'
+        400#3:
+          $ref: 'components.yaml#/responses/error_InvalidTimestamp'
+        400#4:
+          $ref: 'components.yaml#/responses/error_InvalidAssetId'

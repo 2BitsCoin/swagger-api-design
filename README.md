@@ -7,8 +7,13 @@ node server.js
 docker pull swaggerapi/swagger-ui
 docker run -p 80:8080 -e "API_URL=http://localhost:8888/node.v2.yaml" swaggerapi/swagger-ui
 ```
+or replace the path to a YAML file in the last command. For example, to see the matcher API:
+```
+docker run -p 80:8080 -e "API_URL=http://localhost:8888/matcher.v2.yaml" swaggerapi/swagger-ui
+```
+You will be able to specify the API design file later, on the page opened in browser.
 
-And open http://localhost.
+And then open http://localhost.
 
 ## Disclaimer
 As far as Swagger UI doesn't fully support `oneOf` property we decided to use `#` to indicate those parameters which can be replaced by each other. Generally, there are two cases for `#` notation.

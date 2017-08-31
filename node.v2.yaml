@@ -436,7 +436,7 @@ paths:
         200:
           $ref: 'components.yaml#/responses/success_TransactionCreated'
         400#1:
-          $ref: 'components.yaml#/responses/error_InvalidTransactionSignature'
+          $ref: 'components.yaml#/responses/error_InvalidSignature'
         400#2:
           $ref: 'components.yaml#/responses/error_InvalidRecipient'
         400#3:
@@ -461,7 +461,7 @@ paths:
         200:
           $ref: 'components.yaml#/responses/success_TransactionCreated'
         400#1:
-          $ref: 'components.yaml#/responses/error_InvalidTransactionSignature'
+          $ref: 'components.yaml#/responses/error_InvalidSignature'
         400#2:
           $ref: 'components.yaml#/responses/error_InvalidPrecision'
         400#3:
@@ -480,7 +480,7 @@ paths:
         200:
           $ref: 'components.yaml#/responses/success_TransactionCreated'
         400#1:
-          $ref: 'components.yaml#/responses/error_InvalidTransactionSignature'
+          $ref: 'components.yaml#/responses/error_InvalidSignature'
         400#2:
           $ref: 'components.yaml#/responses/error_InvalidAssetId'
         400#3:
@@ -499,7 +499,7 @@ paths:
         200:
           $ref: 'components.yaml#/responses/success_TransactionCreated'
         400#1:
-          $ref: 'components.yaml#/responses/error_InvalidTransactionSignature'
+          $ref: 'components.yaml#/responses/error_InvalidSignature'
         400#2:
           $ref: 'components.yaml#/responses/error_InvalidAssetId'
         400#3:
@@ -518,7 +518,7 @@ paths:
         200:
           $ref: 'components.yaml#/responses/success_TransactionCreated'
         400#1:
-          $ref: 'components.yaml#/responses/error_InvalidTransactionSignature'
+          $ref: 'components.yaml#/responses/error_InvalidSignature'
         400#2:
           $ref: 'components.yaml#/responses/error_InvalidAlias'
         400#3:
@@ -535,7 +535,7 @@ paths:
         200:
           $ref: 'components.yaml#/responses/success_TransactionCreated'
         400#1:
-          $ref: 'components.yaml#/responses/error_InvalidTransactionSignature'
+          $ref: 'components.yaml#/responses/error_InvalidSignature'
         400#2:
           $ref: 'components.yaml#/responses/error_InvalidRecipient'
         400#3:
@@ -556,7 +556,7 @@ paths:
         200:
           $ref: 'components.yaml#/responses/success_TransactionCreated'
         400#1:
-          $ref: 'components.yaml#/responses/error_InvalidTransactionSignature'
+          $ref: 'components.yaml#/responses/error_InvalidSignature'
         400#2:
           $ref: 'components.yaml#/responses/error_InvalidTransactionId'
         400#3:
