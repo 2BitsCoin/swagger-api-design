@@ -38,8 +38,44 @@ paths:
                     type: string
                     example: 0.7.6
 
-  # /orderbooks/{amountAsset}/{priceAsset}:
-  #   get:
+  /orderbooks/{amountAsset}/{priceAsset}:
+    get:
+      summary: Get buy and sell orderbooks by a chosen pair of assets
+      tags:
+        - orderbooks
+      parameters:
+        - $ref: 'components.yaml#/parameters/path_AmountAsset'
+        - $ref: 'components.yaml#/parameters/path_PriceAsset'
+      responses:
+        200:
+          description: Lists of buy and sell orders
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  buySize:
+                    $ref: 'components.yaml#/schemas/Size'
+                  buy:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/AggregatedOrder'
+                  sellSize:
+                    $ref: 'components.yaml#/schemas/Size'
+                  sell:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/AggregatedOrder'
+        302:
+          description: Redirect to the pair with the right amount and price assets order
+          headers:
+            Location:
+              description: The same URL with amount and price assets swapped
+              schema:
+                type: string
+                example: /orderbooks/WAVES/Fmg13HEHJHuZYbtJq8Da8wifJENq8uBxDuWoP9pVe2Qe
+        400:
+          $ref: 'components.yaml#/responses/error_InvalidAssetId'
 
   # /orders:
   #   post:

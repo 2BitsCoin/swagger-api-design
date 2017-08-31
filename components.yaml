@@ -2,6 +2,15 @@ schemas:
 
   # Objects
 
+  AggregatedOrder:
+    description: Summarized data on several buy or sell orders in orderbook
+    type: object
+    properties:
+      amount:
+        $ref: '#/schemas/Amount'
+      price:
+        $ref: '#/schemas/Amount'
+
   Asset:
     description: Asset main info object
     type: object
@@ -557,6 +566,14 @@ parameters:
     schema:
       $ref: '#/schemas/Address'
 
+  path_AmountAsset:
+    in: path
+    name: amountAsset
+    required: true
+    description: Amount asset ID in DEX
+    schema:
+      $ref: '#/schemas/AssetId'
+
   path_AssetId:
     in: path
     name: assetId
@@ -580,6 +597,14 @@ parameters:
     description: ID of a wanted block
     schema:
       $ref: '#/schemas/BlockSignature'
+
+  path_PriceAsset:
+    in: path
+    name: priceAsset
+    required: true
+    description: Price asset ID in DEX
+    schema:
+      $ref: '#/schemas/AssetId'
 
   path_PublicKey:
     in: path
@@ -664,7 +689,7 @@ parameters:
 
   query_PriceAsset:
     in: query
-    name: amountAsset
+    name: priceAsset
     required: false
     description: Price asset ID in DEX
     schema:
