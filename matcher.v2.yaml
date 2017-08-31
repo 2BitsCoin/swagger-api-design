@@ -77,8 +77,39 @@ paths:
         400:
           $ref: 'components.yaml#/responses/error_InvalidAssetId'
 
-  # /orders:
-  #   post:
+  /orders:
+    post:
+      summary: Send an order
+      tags:
+        - orders
+      requestBody:
+        $ref: 'components.yaml#/requestBodies/Order'
+      responses:
+        200:
+          $ref: 'components.yaml#/responses/success_OrderAccepted'
+        400#1:
+          $ref: 'components.yaml#/responses/error_InvalidSignature'
+        400#2:
+          $ref: 'components.yaml#/responses/error_InvalidAssetId'
+        400#3:
+          $ref: 'components.yaml#/responses/error_InvalidTimestamp'
+
+  /orders/cancel:
+    post:
+      summary: Cancel an order
+      tags:
+        - orders
+      requestBody:
+        $ref: 'components.yaml#/requestBodies/CancelOrder'
+      responses:
+        200:
+          $ref: 'components.yaml#/responses/success_OrderCancelled'
+        400#1:
+          $ref: 'components.yaml#/responses/error_InvalidSignature'
+        400#2:
+          $ref: 'components.yaml#/responses/error_InvalidOrderId'
+        400#3:
+          $ref: 'components.yaml#/responses/error_InvalidPublicKey'
 
   /orders/{publicKey}:
     get:

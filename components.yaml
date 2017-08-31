@@ -752,6 +752,52 @@ parameters:
 
 requestBodies:
 
+  Order:
+    description: Request data object for a DEX order
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            senderPublicKey:
+              $ref: '#/schemas/PublicKey'
+            matcherPublicKey:
+              $ref: '#/schemas/PublicKey'
+            amountAsset:
+              $ref: '#/schemas/AssetId'
+            priceAsset:
+              $ref: '#/schemas/AssetId'
+            orderType:
+              $ref: '#/schemas/OrderType'
+            amount:
+              $ref: '#/schemas/Amount'
+            price:
+              $ref: '#/schemas/Amount'
+            timestamp:
+              $ref: '#/schemas/Timestamp'
+            expiration:
+              $ref: '#/schemas/Timestamp'
+            matcherFee:
+              $ref: '#/schemas/Amount'
+            signature:
+              $ref: '#/schemas/TransactionSignature'
+
+  CancelOrder:
+    description: Request data object for cancelling a DEX order
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            senderPublicKey:
+              $ref: '#/schemas/PublicKey'
+            orderId:
+              $ref: '#/schemas/OrderId'
+            signature:
+              $ref: '#/schemas/TransactionSignature'
+
   TransferTransaction:
     description: Request data object for a transfer transaction
     required: true
@@ -936,16 +982,37 @@ requestBodies:
 
 responses:
 
-  success_TransactionCreated:
-    description: Success code and name and the ID of new transaction
+  success_OrderAccepted:
+    description: ID of the accepted order
     content:
       application/json:
         schema:
           type: object
           properties:
-            code:
-              type: number
-              example: 200
+            name:
+              type: string
+              example: order.accepted
+            orderId:
+              $ref: '#/schemas/OrderId'
+
+  success_OrderCancelled:
+    description: Order is cancelled
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              example: order.cancelled
+
+  success_TransactionCreated:
+    description: ID of the new transaction
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
             name:
               type: string
               example: transaction.created
@@ -1047,6 +1114,17 @@ responses:
             name:
               type: string
               example: invalid.fee.asset.id
+
+  error_InvalidOrderId:
+    description: Provided order ID is invalid
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              example: invalid.order.id
 
   error_InvalidPrecision:
     description: Provided asset precision is invalid
