@@ -131,6 +131,8 @@ schemas:
         $ref: '#/schemas/OrderType'
       senderPublicKey:
         $ref: '#/schemas/PublicKey'
+      sender:
+        $ref: '#/schemas/Address'
       matcherPublicKey:
         $ref: '#/schemas/PublicKey'
       pair:
