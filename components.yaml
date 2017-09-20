@@ -49,6 +49,8 @@ schemas:
         $ref: '#/schemas/AssetName'
       balance:
         $ref: '#/schemas/RegularBalance'
+      precision:
+        $ref: '#/schemas/AssetPrecision'
 
   Block:
     description: Block with transactions and metadata
