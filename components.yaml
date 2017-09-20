@@ -158,16 +158,16 @@ schemas:
       regular:
         $ref: '#/schemas/RegularBalance'
       generating:
-        type: integer
+        type: number
         example: 100
       leased:
-        type: integer
+        type: number
         example: 43.95
       available:
-        type: integer
+        type: number
         example: 0
       effective:
-        type: integer
+        type: number
         example: 100
 
   # Transactions
@@ -450,8 +450,8 @@ schemas:
 
   AssetQuantity:
     description: _AssetQuantity_ | Quantity of an asset
-    type: integer
-    example: 100000000
+    type: number
+    example: 10000 # That is for 10000 tokens or 10000 * 10 ^ AssetPrecision coins
 
   BlockHeight:
     description: _BlockHeight_ | Index of a block in blockchain
