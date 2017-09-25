@@ -47,7 +47,7 @@ schemas:
         $ref: '#/schemas/AssetId'
       name:
         $ref: '#/schemas/AssetName'
-      balance:
+      amount:
         $ref: '#/schemas/RegularBalance'
       precision:
         $ref: '#/schemas/AssetPrecision'
