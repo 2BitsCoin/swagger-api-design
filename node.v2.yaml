@@ -95,14 +95,14 @@ paths:
                 properties:
                   size:
                     $ref: 'components.yaml#/schemas/Size'
-                  transactions#transfer:
-                    type: array
-                    items:
-                      $ref: 'components.yaml#/schemas/TransferTransaction'
                   transactions#issue:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/IssueTransaction'
+                  transactions#transfer:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/TransferTransaction'
                   transactions#reissue:
                     type: array
                     items:
@@ -148,14 +148,14 @@ paths:
                 properties:
                   size:
                     $ref: 'components.yaml#/schemas/Size'
-                  transactions#transfer:
-                    type: array
-                    items:
-                      $ref: 'components.yaml#/schemas/TransferTransaction'
                   transactions#issue:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/IssueTransaction'
+                  transactions#transfer:
+                    type: array
+                    items:
+                      $ref: 'components.yaml#/schemas/TransferTransaction'
                   transactions#reissue:
                     type: array
                     items:
@@ -425,6 +425,25 @@ paths:
 
   # TODO : add errors for all cases
 
+  /transactions#issue:
+    post:
+      summary: Send an asset issue transaction (#issue is not a part of the path)
+      tags:
+        - transactions
+      requestBody:
+        $ref: 'components.yaml#/requestBodies/IssueTransaction'
+      responses:
+        200:
+          $ref: 'components.yaml#/responses/success_TransactionCreated'
+        400#1:
+          $ref: 'components.yaml#/responses/error_InvalidSignature'
+        400#2:
+          $ref: 'components.yaml#/responses/error_InvalidPrecision'
+        400#3:
+          $ref: 'components.yaml#/responses/error_InvalidQuantity'
+        400#4:
+          $ref: 'components.yaml#/responses/error_InvalidTimestamp'
+
   /transactions#transfer:
     post:
       summary: Send a transfer transaction (#transfer is not a part of the path)
@@ -448,25 +467,6 @@ paths:
         400#6:
           $ref: 'components.yaml#/responses/error_InvalidAttachment'
         400#7:
-          $ref: 'components.yaml#/responses/error_InvalidTimestamp'
-
-  /transactions#issue:
-    post:
-      summary: Send an asset issue transaction (#issue is not a part of the path)
-      tags:
-        - transactions
-      requestBody:
-        $ref: 'components.yaml#/requestBodies/IssueTransaction'
-      responses:
-        200:
-          $ref: 'components.yaml#/responses/success_TransactionCreated'
-        400#1:
-          $ref: 'components.yaml#/responses/error_InvalidSignature'
-        400#2:
-          $ref: 'components.yaml#/responses/error_InvalidPrecision'
-        400#3:
-          $ref: 'components.yaml#/responses/error_InvalidQuantity'
-        400#4:
           $ref: 'components.yaml#/responses/error_InvalidTimestamp'
 
   /transactions#reissue:
