@@ -540,10 +540,10 @@ schemas:
       - issue
       - reissue
       - burn
-      - createAlias
+      - exchange
       - lease
       - cancelLeasing
-      - exchange
+      - createAlias
     # TODO : rewrite examples in specific cases where this scheme is used
 
   TransactionsCount:
