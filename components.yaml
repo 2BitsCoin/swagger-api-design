@@ -290,21 +290,31 @@ schemas:
       signature:
         $ref: '#/schemas/TransactionSignature'
 
-  CreateAliasTransaction:
+  ExchangeTransaction:
     description: TODO # TODO
     type: object
     properties:
       transactionType:
         $ref: '#/schemas/TransactionType'
-        example: createAlias
+        example: exchange
       id:
         $ref: '#/schemas/TransactionId'
       senderPublicKey:
         $ref: '#/schemas/PublicKey'
       sender:
         $ref: '#/schemas/Address'
-      alias:
-        $ref: '#/schemas/Alias'
+      amount:
+        $ref: '#/schemas/Amount'
+      price:
+        $ref: '#/schemas/Amount'
+      buyOrder:
+        $ref: '#/schemas/Order'
+      buyMatcherFee:
+        $ref: '#/schemas/Amount'
+      sellOrder:
+        $ref: '#/schemas/Order'
+      sellMatcherFee:
+        $ref: '#/schemas/Amount'
       fee:
         $ref: '#/schemas/Amount'
       timestamp:
@@ -362,31 +372,21 @@ schemas:
       signature:
         $ref: '#/schemas/TransactionSignature'
 
-  ExchangeTransaction:
+  CreateAliasTransaction:
     description: TODO # TODO
     type: object
     properties:
       transactionType:
         $ref: '#/schemas/TransactionType'
-        example: exchange
+        example: createAlias
       id:
         $ref: '#/schemas/TransactionId'
       senderPublicKey:
         $ref: '#/schemas/PublicKey'
       sender:
         $ref: '#/schemas/Address'
-      amount:
-        $ref: '#/schemas/Amount'
-      price:
-        $ref: '#/schemas/Amount'
-      buyOrder:
-        $ref: '#/schemas/Order'
-      buyMatcherFee:
-        $ref: '#/schemas/Amount'
-      sellOrder:
-        $ref: '#/schemas/Order'
-      sellMatcherFee:
-        $ref: '#/schemas/Amount'
+      alias:
+        $ref: '#/schemas/Alias'
       fee:
         $ref: '#/schemas/Amount'
       timestamp:
@@ -914,28 +914,6 @@ requestBodies:
             signature:
               $ref: '#/schemas/TransactionSignature'
 
-  CreateAliasTransaction:
-    description: Request data object for an alias creation transaction
-    required: true
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            transactionType:
-              $ref: '#/schemas/TransactionType'
-              example: createAlias
-            senderPublicKey:
-              $ref: '#/schemas/PublicKey'
-            alias:
-              $ref: '#/schemas/Alias'
-            fee:
-              $ref: '#/schemas/Amount'
-            timestamp:
-              $ref: '#/schemas/Timestamp'
-            signature:
-              $ref: '#/schemas/TransactionSignature'
-
   LeaseTransaction:
     description: Request data object for a leasing start transaction
     required: true
@@ -977,6 +955,28 @@ requestBodies:
               $ref: '#/schemas/PublicKey'
             transactionId:
               $ref: '#/schemas/TransactionId'
+            fee:
+              $ref: '#/schemas/Amount'
+            timestamp:
+              $ref: '#/schemas/Timestamp'
+            signature:
+              $ref: '#/schemas/TransactionSignature'
+
+  CreateAliasTransaction:
+    description: Request data object for an alias creation transaction
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            transactionType:
+              $ref: '#/schemas/TransactionType'
+              example: createAlias
+            senderPublicKey:
+              $ref: '#/schemas/PublicKey'
+            alias:
+              $ref: '#/schemas/Alias'
             fee:
               $ref: '#/schemas/Amount'
             timestamp:

@@ -111,10 +111,10 @@ paths:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/BurnTransaction'
-                  transactions#createAlias:
+                  transactions#exchange:
                     type: array
                     items:
-                      $ref: 'components.yaml#/schemas/CreateAliasTransaction'
+                      $ref: 'components.yaml#/schemas/ExchangeTransaction'
                   transactions#lease:
                     type: array
                     items:
@@ -123,10 +123,10 @@ paths:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/CancelLeasingTransaction'
-                  transactions#exchange:
+                  transactions#createAlias:
                     type: array
                     items:
-                      $ref: 'components.yaml#/schemas/ExchangeTransaction'
+                      $ref: 'components.yaml#/schemas/CreateAliasTransaction'
         400:
           $ref: 'components.yaml#/responses/error_InvalidAddress'
 
@@ -164,10 +164,10 @@ paths:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/BurnTransaction'
-                  transactions#createAlias:
+                  transactions#exchange:
                     type: array
                     items:
-                      $ref: 'components.yaml#/schemas/CreateAliasTransaction'
+                      $ref: 'components.yaml#/schemas/ExchangeTransaction'
                   transactions#lease:
                     type: array
                     items:
@@ -176,10 +176,10 @@ paths:
                     type: array
                     items:
                       $ref: 'components.yaml#/schemas/CancelLeasingTransaction'
-                  transactions#exchange:
+                  transactions#createAlias:
                     type: array
                     items:
-                      $ref: 'components.yaml#/schemas/ExchangeTransaction'
+                      $ref: 'components.yaml#/schemas/CreateAliasTransaction'
         400:
           $ref: 'components.yaml#/responses/error_InvalidAddress'
 
