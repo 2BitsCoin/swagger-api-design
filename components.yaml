@@ -106,13 +106,13 @@ schemas:
         $ref: '#/schemas/FeeAssetsToAmounts'
       burnFee:
         $ref: '#/schemas/FeeAssetsToAmounts'
-      createAliasFee:
+      exchangeFee:
         $ref: '#/schemas/FeeAssetsToAmounts'
       leaseFee:
         $ref: '#/schemas/FeeAssetsToAmounts'
       cancelLeasingFee:
         $ref: '#/schemas/FeeAssetsToAmounts'
-      exchangeFee:
+      createAliasFee:
         $ref: '#/schemas/FeeAssetsToAmounts'
 
   FeeAssetsToAmounts:
