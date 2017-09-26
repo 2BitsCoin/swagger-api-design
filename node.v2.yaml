@@ -440,7 +440,7 @@ paths:
         400#2:
           $ref: 'components.yaml#/responses/error_InvalidPrecision'
         400#3:
-          $ref: 'components.yaml#/responses/error_InvalidQuantity'
+          $ref: 'components.yaml#/responses/error_InvalidAmount'
         400#4:
           $ref: 'components.yaml#/responses/error_InvalidTimestamp'
 
@@ -484,7 +484,7 @@ paths:
         400#2:
           $ref: 'components.yaml#/responses/error_InvalidAssetId'
         400#3:
-          $ref: 'components.yaml#/responses/error_InvalidQuantity'
+          $ref: 'components.yaml#/responses/error_InvalidAmount'
         400#4:
           $ref: 'components.yaml#/responses/error_InvalidTimestamp'
 
@@ -503,7 +503,7 @@ paths:
         400#2:
           $ref: 'components.yaml#/responses/error_InvalidAssetId'
         400#3:
-          $ref: 'components.yaml#/responses/error_InvalidQuantity'
+          $ref: 'components.yaml#/responses/error_InvalidAmount'
         400#4:
           $ref: 'components.yaml#/responses/error_InvalidTimestamp'
 
