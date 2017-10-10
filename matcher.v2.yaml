@@ -54,6 +54,10 @@ paths:
               schema:
                 type: object
                 properties:
+                  amountAsset:
+                    $ref: 'components.yaml#/schemas/AssetId'
+                  priceAsset:
+                    $ref: 'components.yaml#/schemas/AssetId'
                   buySize:
                     $ref: 'components.yaml#/schemas/Size'
                   buy:
@@ -74,6 +78,29 @@ paths:
               schema:
                 type: string
                 example: /orderbooks/WAVES/Fmg13HEHJHuZYbtJq8Da8wifJENq8uBxDuWoP9pVe2Qe
+        400:
+          $ref: 'components.yaml#/responses/error_InvalidAssetId'
+
+  /orderbooks/sequence/{amountAsset}/{priceAsset}:
+    get:
+      summary: Get assets back in the right order (amount and price)
+      tags:
+        - orderbooks
+      parameters:
+        - $ref: 'components.yaml#/parameters/path_AmountAsset'
+        - $ref: 'components.yaml#/parameters/path_PriceAsset'
+      responses:
+        200:
+          description: Properly positioned amount and price assets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  amountAsset:
+                    $ref: 'components.yaml#/schemas/AssetId'
+                  priceAsset:
+                    $ref: 'components.yaml#/schemas/AssetId'
         400:
           $ref: 'components.yaml#/responses/error_InvalidAssetId'
 
