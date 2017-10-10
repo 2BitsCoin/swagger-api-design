@@ -30,15 +30,6 @@ schemas:
       timestamp:
         $ref: '#/schemas/Timestamp'
 
-  AssetPair:
-    description: Pair of assets from Waves Matcher
-    type: object
-    properties:
-      amountAsset:
-        $ref: '#/schemas/AssetId'
-      priceAsset:
-        $ref: '#/schemas/AssetId'
-
   Balance:
     description: ID, name, and regular balance of an asset
     type: object
@@ -137,11 +128,13 @@ schemas:
         $ref: '#/schemas/Address'
       matcherPublicKey:
         $ref: '#/schemas/PublicKey'
-      pair:
-        $ref: '#/schemas/AssetPair'
-      price:
-        $ref: '#/schemas/Amount'
+      amountAsset:
+        $ref: '#/schemas/AssetId'
       amount:
+        $ref: '#/schemas/Amount'
+      priceAsset:
+        $ref: '#/schemas/AssetId'
+      price:
         $ref: '#/schemas/Amount'
       matcherFee:
         $ref: '#/schemas/Amount'
@@ -303,8 +296,12 @@ schemas:
         $ref: '#/schemas/PublicKey'
       sender:
         $ref: '#/schemas/Address'
+      amountAsset:
+        $ref: '#/schemas/AssetId'
       amount:
         $ref: '#/schemas/Amount'
+      priceAsset:
+        $ref: '#/schemas/AssetId'
       price:
         $ref: '#/schemas/Amount'
       buyOrder:
