@@ -75,8 +75,6 @@ schemas:
       signature:
         type: string
         example: 62tPPQS5tEkDScFf6FyXXE71VwFsppp79wF1hwo11saE4Q6MHUF2TN4Yg5zVprNAH4MSwHy5Zm5s5ZGEbTF9n6gz
-      fee:
-        $ref: '#/schemas/Amount'
       blocksize:
         type: integer
         example: 218
