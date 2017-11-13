@@ -192,7 +192,7 @@ schemas:
         $ref: '#/schemas/AssetIsReissuable'
       fee:
         $ref: '#/schemas/Amount'
-      blockHeight:
+      height:
         $ref: '#/schemas/BlockHeight'
       timestamp:
         $ref: '#/schemas/Timestamp'
@@ -228,7 +228,7 @@ schemas:
         $ref: '#/schemas/AssetId'
       fee:
         $ref: '#/schemas/Amount'
-      blockHeight:
+      height:
         $ref: '#/schemas/BlockHeight'
       timestamp:
         $ref: '#/schemas/Timestamp'
@@ -256,7 +256,7 @@ schemas:
         $ref: '#/schemas/AssetIsReissuable'
       fee:
         $ref: '#/schemas/Amount'
-      blockHeight:
+      height:
         $ref: '#/schemas/BlockHeight'
       timestamp:
         $ref: '#/schemas/Timestamp'
@@ -282,7 +282,7 @@ schemas:
         $ref: '#/schemas/Amount'
       fee:
         $ref: '#/schemas/Amount'
-      blockHeight:
+      height:
         $ref: '#/schemas/BlockHeight'
       timestamp:
         $ref: '#/schemas/Timestamp'
@@ -320,7 +320,7 @@ schemas:
         $ref: '#/schemas/Amount'
       fee:
         $ref: '#/schemas/Amount'
-      blockHeight:
+      height:
         $ref: '#/schemas/BlockHeight'
       timestamp:
         $ref: '#/schemas/Timestamp'
@@ -350,7 +350,7 @@ schemas:
         $ref: '#/schemas/Amount'
       fee:
         $ref: '#/schemas/Amount'
-      blockHeight:
+      height:
         $ref: '#/schemas/BlockHeight'
       timestamp:
         $ref: '#/schemas/Timestamp'
@@ -374,7 +374,7 @@ schemas:
         $ref: '#/schemas/TransactionId'
       fee:
         $ref: '#/schemas/Amount'
-      blockHeight:
+      height:
         $ref: '#/schemas/BlockHeight'
       timestamp:
         $ref: '#/schemas/Timestamp'
@@ -398,7 +398,7 @@ schemas:
         $ref: '#/schemas/Alias'
       fee:
         $ref: '#/schemas/Amount'
-      blockHeight:
+      height:
         $ref: '#/schemas/BlockHeight'
       timestamp:
         $ref: '#/schemas/Timestamp'
