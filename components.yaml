@@ -31,7 +31,7 @@ schemas:
         $ref: '#/schemas/Timestamp'
 
   Balance:
-    description: ID, name, and regular balance of an asset
+    description: ID, name, and regular balance of an asset at height
     type: object
     properties:
       id:
@@ -42,6 +42,8 @@ schemas:
         $ref: '#/schemas/RegularBalance'
       precision:
         $ref: '#/schemas/AssetPrecision'
+      height:
+        $ref: '#/schemas/BlockHeight'
 
   Block:
     description: Block with transactions and metadata
