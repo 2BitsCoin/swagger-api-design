@@ -346,6 +346,9 @@ schemas:
         $ref: '#/schemas/Alias'
       recipientAddress:
         $ref: '#/schemas/AddressUnprefixed'
+      isActive:
+        type: boolean
+        example: true
       amount:
         $ref: '#/schemas/Amount'
       fee:
@@ -372,6 +375,8 @@ schemas:
         $ref: '#/schemas/Address'
       leaseTransactionId:
         $ref: '#/schemas/TransactionId'
+      leaseTransactionAmount:
+        $ref: '#/schemas/Amount'
       fee:
         $ref: '#/schemas/Amount'
       height:
