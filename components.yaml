@@ -194,7 +194,7 @@ schemas:
         $ref: '#/schemas/AssetIsReissuable'
       fee:
         $ref: '#/schemas/Amount'
-      blockHeight:
+      height:
         $ref: '#/schemas/BlockHeight'
       timestamp:
         $ref: '#/schemas/Timestamp'
@@ -230,7 +230,7 @@ schemas:
         $ref: '#/schemas/AssetId'
       fee:
         $ref: '#/schemas/Amount'
-      blockHeight:
+      height:
         $ref: '#/schemas/BlockHeight'
       timestamp:
         $ref: '#/schemas/Timestamp'
@@ -258,7 +258,7 @@ schemas:
         $ref: '#/schemas/AssetIsReissuable'
       fee:
         $ref: '#/schemas/Amount'
-      blockHeight:
+      height:
         $ref: '#/schemas/BlockHeight'
       timestamp:
         $ref: '#/schemas/Timestamp'
@@ -284,7 +284,7 @@ schemas:
         $ref: '#/schemas/Amount'
       fee:
         $ref: '#/schemas/Amount'
-      blockHeight:
+      height:
         $ref: '#/schemas/BlockHeight'
       timestamp:
         $ref: '#/schemas/Timestamp'
@@ -322,7 +322,7 @@ schemas:
         $ref: '#/schemas/Amount'
       fee:
         $ref: '#/schemas/Amount'
-      blockHeight:
+      height:
         $ref: '#/schemas/BlockHeight'
       timestamp:
         $ref: '#/schemas/Timestamp'
@@ -348,11 +348,14 @@ schemas:
         $ref: '#/schemas/Alias'
       recipientAddress:
         $ref: '#/schemas/AddressUnprefixed'
+      isActive:
+        type: boolean
+        example: true
       amount:
         $ref: '#/schemas/Amount'
       fee:
         $ref: '#/schemas/Amount'
-      blockHeight:
+      height:
         $ref: '#/schemas/BlockHeight'
       timestamp:
         $ref: '#/schemas/Timestamp'
@@ -374,9 +377,11 @@ schemas:
         $ref: '#/schemas/Address'
       leaseTransactionId:
         $ref: '#/schemas/TransactionId'
+      leaseTransactionAmount:
+        $ref: '#/schemas/Amount'
       fee:
         $ref: '#/schemas/Amount'
-      blockHeight:
+      height:
         $ref: '#/schemas/BlockHeight'
       timestamp:
         $ref: '#/schemas/Timestamp'
@@ -400,7 +405,7 @@ schemas:
         $ref: '#/schemas/Alias'
       fee:
         $ref: '#/schemas/Amount'
-      blockHeight:
+      height:
         $ref: '#/schemas/BlockHeight'
       timestamp:
         $ref: '#/schemas/Timestamp'
