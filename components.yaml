@@ -39,7 +39,7 @@ schemas:
       name:
         $ref: '#/schemas/AssetName'
       amount:
-        $ref: '#/schemas/RegularBalance'
+        $ref: '#/schemas/AvailableBalance'
       precision:
         $ref: '#/schemas/AssetPrecision'
       height:
@@ -151,19 +151,27 @@ schemas:
     type: object
     properties:
       regular:
-        $ref: '#/schemas/RegularBalance'
-      generating:
+        description: An amount of Waves you possess
         type: number
-        example: 100
-      leased:
-        type: number
-        example: 43.95
+        example: 100.5
       available:
-        type: number
-        example: 0
+        $ref: '#/schemas/AvailableBalance'
       effective:
+        description: Potential generating balance (available + leasedIn)
         type: number
-        example: 100
+        example: 150
+      generating:
+        description: Actual genrating balance (minimal effective for last 100 blocks)
+        type: number
+        example: 150
+      leasedOut:
+        description: Waves you leased to someone
+        type: number
+        example: 20.5
+      leasedIn:
+        description: Waves someone leased to you
+        type: number
+        example: 70
 
   # Transactions
 
@@ -468,6 +476,12 @@ schemas:
     enum: [0, 1, 2, 3, 4, 5, 6, 7, 8]
     example: 8
 
+  AvailableBalance:
+    description: _AvailableBalance_ | Waves balance which is not leased out or asset balance (for assets it equals their regular balance)
+    type: number
+    minimum: 0
+    example: 80
+
   BlockHeight:
     description: _BlockHeight_ | Index of a block in blockchain
     type: integer
@@ -505,12 +519,6 @@ schemas:
     description: _PublicKey_ | Base58-encoded public key bytes
     type: string
     example: CNSX9rvPih5wvRj6gh6aSCoHXoYqTzsGLDLfvuUtV2s8
-
-  RegularBalance:
-    description: _RegularBalance_ | Simply a balance of a given asset or Waves regular balance (it is always a float number)
-    type: number
-    minimum: 0
-    example: 143.95
 
   Score:
     description: _Score_ | Score of the blockchain on the Node

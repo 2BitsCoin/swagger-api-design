@@ -262,7 +262,7 @@ paths:
               schema:
                 type: object
                 additionalProperties:
-                  $ref: 'components.yaml#/schemas/RegularBalance'
+                  $ref: 'components.yaml#/schemas/AvailableBalance'
         400:
           $ref: 'components.yaml#/responses/error_InvalidAssetId'
 
