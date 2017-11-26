@@ -145,7 +145,6 @@ schemas:
       signature:
         $ref: '#/schemas/OrderSignature'
 
-  # TODO : check if numbers below are correct
   WavesDetailedBalance:
     description: Detailed Waves balance object
     type: object
