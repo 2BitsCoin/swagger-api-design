@@ -160,7 +160,7 @@ schemas:
         type: number
         example: 150
       generating:
-        description: Actual genrating balance (minimal effective for last 100 blocks)
+        description: Actual generating balance (minimal effective for last 100 blocks)
         type: number
         example: 150
       leasedOut:
